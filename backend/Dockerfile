@@ -1,3 +1,11 @@
 FROM python:3.10-slim
-RUN pip3 install --upgrade pip
-RUN pip3 install -r requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+# workdir + runserver
+COPY . . 
+WORKDIR ./grocery_helper_project
+RUN python manage.py
+RUN python manage.py makemigrations
+RUN python manage.py migrate
+# RUN python manage.py runserver 0.0.0.0:8000
