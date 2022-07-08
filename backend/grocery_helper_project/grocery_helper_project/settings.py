@@ -27,12 +27,17 @@ SECRET_KEY = 'django-insecure-e*hvqi(208+xf*7t=j4p&&ol-45igvj6+@2f2(*a2)((=%o7%n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1']
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+    'http://127.0.0.1:8080',
+)
 # DEBUG = config('DEBUG', cast=bool)
 # ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'grocery_helper_api.apps.GroceryHelperApiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,6 +49,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
