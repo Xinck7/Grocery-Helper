@@ -1,0 +1,11 @@
+from items and ingredients
+    #todo can price be called from a website? or more?
+
+from list
+    #todo need to calculate total price of items
+    #todo setup return of list in the 'ingredients' as it doesn't right now
+
+from recipes section
+    #todo calculate the individual prices
+    #todo need to implement selectable options of ingredients
+    #todo need to implement frontend how to dynamically add a new ingredient in a modal if you haven't already

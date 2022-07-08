@@ -1,39 +1,30 @@
+from random import choices
+from urllib import request
 from rest_framework import serializers
-
+from django.db.models import Sum
 from grocery_helper_api.models import Ingredients, Items, List, Recipes
 
 class IngredientsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredients
-        fields = ('name',
-                  'location',
-                  'ailse',
-                  'amount',
-                  'calore_per_serving',
-                  'serving_amount',
-                  'obtained',
-                  'price')
+        fields = '__all__'
 
 
 class ItemsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Items
-        fields = ('name',
-                  'location',
-                  'ailse',
-                  'price')
+        fields = '__all__'
 
 class ListSerializer(serializers.ModelSerializer):
+    ingredients = IngredientsSerializer(many=True)
+    items = ItemsSerializer(many=True)
     class Meta:
         model = List
-        fields = ('name',
-                  'ingredients',
-                  'items',
-                  'price')
+        fields = '__all__'
+
 
 class RecipesSerializer(serializers.ModelSerializer):
+    ingredients = IngredientsSerializer(many=True)
     class Meta:
         model = Recipes
-        fields = ('name',
-                  'ingredients',
-                  'price')
+        fields = '__all__'
