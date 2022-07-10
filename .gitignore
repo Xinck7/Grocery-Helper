@@ -348,3 +348,4 @@ baseline.json
 
 #postgres files
 pg_data
+.vscode
