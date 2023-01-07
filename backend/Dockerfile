@@ -6,7 +6,4 @@ RUN pip install -r requirements.txt
 
 # workdir + runserver
 WORKDIR ./grocery_helper_project
-CMD [ "python" "manage.py" "makemigrations" ]
-
-
-# RUN python manage.py runserver 0.0.0.0:8000
+CMD [ "python3" "manage.py" "makemigrations" "&&" "python3" "manage.py" "migrate"]

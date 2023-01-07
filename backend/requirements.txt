@@ -1,8 +1,11 @@
 asgiref==3.5.2
-Django==4.0.6
+Django==3.2
 django-cors-headers==3.13.0
 djangorestframework==3.13.1
 psycopg2-binary==2.9.3
 python-decouple==3.6
 pytz==2022.1
 sqlparse==0.4.2
+Celery
+django-celery-beat 
+django-celery-results # currently requires Django 4.0 or older

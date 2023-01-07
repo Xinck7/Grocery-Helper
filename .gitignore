@@ -349,3 +349,6 @@ baseline.json
 #postgres files
 pg_data
 .vscode
+
+#vagrant source files
+.vagrant
