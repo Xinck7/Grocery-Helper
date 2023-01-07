@@ -16,3 +16,6 @@
 - light theme toggle button
 - high contrast?
 - page for todo list 
+
+# Alias to help
+alias dc-bounce="docker compose down && docker compose up -d"

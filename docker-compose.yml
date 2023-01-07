@@ -10,28 +10,33 @@ services:
       POSTGRES_DB: 'grocery_helper'
     ports:
       - "5432:5432"
-  # backend:
-  #   build:
-  #     context: ./backend
-  #     dockerfile: Dockerfile
-  #   volumes:
-  #     - ./backend:/data
-  #   depends_on:
-  #     - db
-  #   ports:
-  #     - "8000:8000"
-  #   # command: /bin/bash -c "sleep 150000"
-  #   command: "python3 manage.py runserver"
-  # frontend:
-  #   image: grocery_frontend:test
-  #   volumes:
-  #     - ./frontend:/data
-  #   depends_on:
-  #     - backend
-  #   # command: "cd /data/GroceryHelper && ng serve"
-  #   command: /bin/bash -c "sleep 150000"
-  #   ports:
-  #     - "4200:4200"
-  
-  # rabbitmq:
-  #   image: rabbitmq:
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: 'rabbitmq_user'
+      RABBITMQ_DEFAULT_PASS: 'RabbitMQMGMT2023!@#'
+    ports:
+      - "8080:15672"
+    volumes:
+      - ./rabbitmq/var/lib/rabbitmq:/var/lib/rabbitmq
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/opt
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    # command: /bin/bash -c "sleep 150000"
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+  frontend:
+    image: grocery_frontend:test
+    volumes:
+      - ./frontend:/opt
+    depends_on:
+      - backend
+    command: bash -c "ng serve --host 0.0.0.0"
+    ports:
+      - "4200:4200"
