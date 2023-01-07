@@ -1,40 +1,37 @@
 version: '3.9'
 services:
   db:
-    image: postgres:alpine
+    image: postgres:15-alpine
     volumes:
-      - D:\GitRepos\Grocery-Helper\pg_data:/data
+      - ./pg_data:/data
     environment:
       POSTGRES_USER: 'svc_grocery_db'
       POSTGRES_PASSWORD: 'groceryService2022!@#'
       POSTGRES_DB: 'grocery_helper'
-  backend:
-    image: grocery_backend:test
-    volumes:
-      - D:\GitRepos\Grocery-Helper\backend:/data/
-    depends_on:
-      - db
     ports:
-      - "8000:8000"
-    command: /bin/bash -c "sleep 150000"
-  # rabbitmq:
-  #   image: rabbitmq:alpine
-  #   depends_on:
-  #     - backend
-  # worker:
-  #   image: python:slim
+      - "5432:5432"
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
   #   volumes:
-  #     - D:\GitRepos\Grocery-Helper\workers:/data/
+  #     - ./backend:/data
+  #   depends_on:
+  #     - db
+  #   ports:
+  #     - "8000:8000"
+  #   # command: /bin/bash -c "sleep 150000"
+  #   command: "python3 manage.py runserver"
+  # frontend:
+  #   image: grocery_frontend:test
+  #   volumes:
+  #     - ./frontend:/data
   #   depends_on:
   #     - backend
-  frontend:
-    build: 
-      context: frontend/
-      dockerfile: Dockerfile
-    volumes:
-      - D:\GitRepos\Grocery-Helper\frontend:/data/
-    depends_on:
-      - backend
-    command: /bin/bash -c "sleep 150000"
-    ports:
-      - "4200:4200"
+  #   # command: "cd /data/GroceryHelper && ng serve"
+  #   command: /bin/bash -c "sleep 150000"
+  #   ports:
+  #     - "4200:4200"
+  
+  # rabbitmq:
+  #   image: rabbitmq:
