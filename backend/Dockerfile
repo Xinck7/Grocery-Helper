@@ -7,4 +7,4 @@ RUN pip install -r requirements.txt
 
 # workdir + migrations
 WORKDIR /opt/grocery_helper_project
-CMD [ "python3" "manage.py" "makemigrations" "&&" "python3" "manage.py" "migrate"]
+CMD [ "python3" "manage.py" "makemigrations"]

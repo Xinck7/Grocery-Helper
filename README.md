@@ -24,3 +24,6 @@ This application is to help keep track of what you need at the grocery store:
 1. Build API
 2. Async processing for distributed layers
 3. Save to Database
+
+## Run Locally
+cd frontend && docker build -t grocery_frontend:test . && cd ../
