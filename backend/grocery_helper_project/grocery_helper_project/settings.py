@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
-    '*'
+    'http://127.0.0.1:4200','http://localhost:4200'
 )
 # DEBUG = config('DEBUG', cast=bool)
 # ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
