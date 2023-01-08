@@ -11,7 +11,7 @@ This application is to help keep track of what you need at the grocery store:
 2. Angular frontend
 3. Django backend
 4. Celery worker
-5. Redis queue manager
+5. RabbitMQ task manager
 
 ## Tools to use once launching
 1. Gitlab CI for testing/changes after feature 1 included
