@@ -10,6 +10,7 @@
 - generate route for aisles
 
 # Frontend Design ideas
+- IMPORTANT User feedback on how to improve!
 - navbar with the pages (purple/black dark theme?)
 - Mobile have the menu hidden in hamburger stack
 - desktop have it displayed normally as a banner design
@@ -19,3 +20,6 @@
 
 # Alias to help
 alias dc-bounce="docker compose down && docker compose up -d"
+
+# Setup
+Don't forget to create a superuser on django
