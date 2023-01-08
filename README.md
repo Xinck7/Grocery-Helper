@@ -1,5 +1,6 @@
 # Grocery-Helper
 This application is to help keep track of what you need at the grocery store:
+
 ## Ideas
 1. Simple list
 2. Meal descriptions
