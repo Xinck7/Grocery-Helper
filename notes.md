@@ -36,7 +36,8 @@ Free = synced lists
 WARNING ON CANCELLATION - make clear upon sign up and on cancelling
 -> upon cancelling all data between the date of sign up will be locked 
 -> greyed out lists/features
--> add reasons why to collect metrics
+-> add reasons why quitting to collect metrics
+-> include sad cat image mayhaps?
 $ Recipe import/export/add to list
     maybe add instructions import option (long term)
 $ Route prediction including frozen/refrigerated items last option and/or effecient
