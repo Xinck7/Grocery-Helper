@@ -1,5 +1,5 @@
 asgiref
-Django==3.2
+Django==3.2.16
 django-cors-headers==3.13.0
 djangorestframework==3.13.1
 psycopg2-binary==2.9.3
@@ -9,3 +9,4 @@ sqlparse==0.4.2
 Celery
 django-celery-beat 
 django-celery-results # currently requires Django 4.0 or older
+Pillow
