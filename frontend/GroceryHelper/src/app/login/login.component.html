@@ -1,0 +1,18 @@
+<div class="login-form-container">
+    <h1>Login</h1>
+
+    <form [formGroup]="logInForm" (ngSubmit)="onSubmit(logInForm.value)">
+        
+        <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" placeholder="email@domain.com" type="text" autocomplete="off"/>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password"/>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button color="primary" type="submit" cdkFocusInitial>Log in</button>
+    </form>
+</div>

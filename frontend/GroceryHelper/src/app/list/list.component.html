@@ -1,1 +1,32 @@
 <p>list works!</p>
+<!-- <mat-tab-group>
+    <mat-tab label="First"> Content 1 </mat-tab>
+    <mat-tab label="Second"> Content 2 </mat-tab>
+    <mat-tab label="Third"> Content 3 </mat-tab>
+  </mat-tab-group>   -->
+  <div>
+    <button (click)="addListLine()">Add</button>
+  </div>
+  
+  <div class="list" *ngFor="let item of listLine; let i = index">
+  
+    <div>
+      <span class="title">Item number:</span> {{i +1}}
+  
+      <span class="remove">
+        <button (click)='removeListLine(i)'> X</button>
+      </span>
+    </div>
+  
+  
+    <div>
+      <span class="title"> Title:</span>
+      <input [(ngModel)]="item.title" type="text">
+    </div>
+  
+    <div> 
+      <span class="title"> Description:</span>
+      <input [(ngModel)]="item.description" type="text">
+    </div>
+  
+  </div>

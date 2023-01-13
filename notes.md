@@ -43,8 +43,10 @@ $ Recipe import/export/add to list
     maybe add instructions import option (long term)
 $ Route prediction including frozen/refrigerated items last option and/or effecient
 -> snake route
+    sort list by aislemo
 -> most effecient (likely fastest)
 -> cold must be last+bread on top
+    -> add to the list on the right side the aisle number
 $ Calorie tracking/threshold settings
 $ Meal planning 
 -> do you ACTUALLY have every meal appropriately portioned/planned
@@ -52,3 +54,7 @@ $ Meal planning
 -> generate list based on meal sections
 $ Recipe notebook -> collection to all recipes imported (long term maybe?)
 $ Budget planning -> allows prices to be unlocked/shown for total cost estimate (maybe included in all priced tiers)
+
+#case number 
+858-766-7520 for gazelle - claim for new label created so that it will ship to warehouse
+claim - c02453525
