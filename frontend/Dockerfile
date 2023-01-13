@@ -14,4 +14,4 @@ RUN npm install npm@latest -g
 RUN npm install -g @angular/cli
 
 #Install packages
-RUN npm install 
+# RUN npm install 

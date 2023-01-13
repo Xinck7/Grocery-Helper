@@ -8,8 +8,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
 #Basics
-from grocery_helper_api.serializers import IngredientSerializer, ItemSerializer, ListSerializer, RecipeSerializer, User
-from grocery_helper_api.models import Ingredient, Item, List, Recipe
+from grocery_helper_api.serializers import IngredientSerializer, ItemSerializer, ListSerializer, RecipeSerializer, UserSerializer
+from grocery_helper_api.models import Ingredient, Item, List, Recipe, User
 
 #User auth
 from .permissions import IsUserOrReadOnly
