@@ -1,7 +1,5 @@
-from random import choices
-from urllib import request
 from rest_framework import serializers
-from django.db.models import Sum
+# from django.db.models import Sum
 from grocery_helper_api.models import Ingredient, Item, List, Recipe, User
 
 class IngredientSerializer(serializers.ModelSerializer):
