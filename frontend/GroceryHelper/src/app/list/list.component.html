@@ -1,32 +1,47 @@
-<p>list works!</p>
-<!-- <mat-tab-group>
-    <mat-tab label="First"> Content 1 </mat-tab>
-    <mat-tab label="Second"> Content 2 </mat-tab>
-    <mat-tab label="Third"> Content 3 </mat-tab>
-  </mat-tab-group>   -->
+
+<mat-card class="result">
+  <mat-card-content>
+    <h2 class="example-h2">List #number to fill TBD from API</h2>
+
+    <section class="Checkbox">
+      <mat-checkbox class="example-margin" [(ngModel)]="checked" [disabled]="disabled">
+        I'm a checkbox
+      </mat-checkbox>
+    </section>
+  </mat-card-content>
+</mat-card>
+<br>
+<mat-card>
+  <mat-card-content>
+    <h2 class="example-h2"></h2>
+
+    <section class="example-section">
+      <mat-checkbox class="example-margin" [(ngModel)]="checked">Checked</mat-checkbox>
+    </section>
+    
+    <div class="list" *ngFor="let item of listLine; let i = index">
+      <mat-checkbox class="example-margin" [(ngModel)]="checked">
+      <div>
+        <span class="title">Item number:</span> {{i +1}}
+        <div>
+          <span class="title"> Title:</span>
+          <input [(ngModel)]="item.title" type="text">
+        </div>
+      
+        <div> 
+          <span class="title"> Description:</span>
+          <input [(ngModel)]="item.description" type="text">
+        </div>
+        <span class="remove">
+          <button mat-raised-button color="warn" (click)='removeListLine(i)'> X</button>
+        </span>
+      </div>
+      </mat-checkbox>
+    </div>
+  </mat-card-content>
   <div>
-    <button (click)="addListLine()">Add</button>
+    <button mat-raised-button color="primary" (click)="addListLine()">Add</button>
   </div>
+</mat-card>
+
   
-  <div class="list" *ngFor="let item of listLine; let i = index">
-  
-    <div>
-      <span class="title">Item number:</span> {{i +1}}
-  
-      <span class="remove">
-        <button (click)='removeListLine(i)'> X</button>
-      </span>
-    </div>
-  
-  
-    <div>
-      <span class="title"> Title:</span>
-      <input [(ngModel)]="item.title" type="text">
-    </div>
-  
-    <div> 
-      <span class="title"> Description:</span>
-      <input [(ngModel)]="item.description" type="text">
-    </div>
-  
-  </div>

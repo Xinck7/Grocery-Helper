@@ -9,6 +9,9 @@ import { Task } from '../model/task.model';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
+  checked = false;
+  labelPosition: 'before' | 'after' = 'after';
+  disabled = false;
 
   constructor() { }
 

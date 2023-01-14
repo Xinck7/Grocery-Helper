@@ -14,10 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from django.urls import path, include, re_path, reverse_lazy
+from grocery_helper_api.views import UserLogIn
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('api/', include('grocery_helper_api.urls')),
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls'))
-]
+    path('api-user-login/', UserLogIn.as_view()),
+    path('api-auth/', include('rest_framework.urls', namespace='api-auth')),
+    re_path(r'^$', RedirectView.as_view(url=reverse_lazy('api-root'), permanent=False)), 
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
