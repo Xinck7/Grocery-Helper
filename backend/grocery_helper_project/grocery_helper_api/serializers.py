@@ -31,5 +31,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'bio', 'profile_pic')
-        read_only_fields = ('username', )
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'bio', 'profile_pic')
+        # read_only_fields = fields
+        profile_pic = serializers.ImageField(required=False, max_length=None, 
+                                     allow_empty_file=True, use_url=True)

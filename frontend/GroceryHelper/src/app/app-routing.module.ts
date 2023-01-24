@@ -1,12 +1,15 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { IngredientsComponent } from './ingredients/ingredients.component';
-import { ItemsComponent } from './items/items.component';
-import { ListComponent } from './list/list.component';
-import { RecipesComponent } from './recipes/recipes.component';
-import { LoginComponent } from './login/login.component';
-import { UserProfileComponent } from "./user-profile/user-profile.component";
-import { AuthGuard } from "./auth.guard";
+import { IngredientsComponent } from './components/ingredients/ingredients.component';
+import { ItemsComponent } from './components/items/items.component';
+import { ListComponent } from './components/list/list.component';
+import { RecipesComponent } from './components/recipes/recipes.component';
+import { LoginComponent } from './components/login/login.component';
+import { UserProfileComponent } from "./components/user-profile/user-profile.component";
+import { AuthGuard } from "./guards/auth.guard";
+import { RegisterComponent } from "./components/register/register.component"
+import { NotFoundComponent } from "./components/not-found/not-found.component"
+
 
 const routes: Routes = [
   {
@@ -26,8 +29,16 @@ const routes: Routes = [
     component: RecipesComponent
   },
   {
-    path: 'login',
+    path: '',
     component: LoginComponent 
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
   },
   {
     path: 'user-profile/:id',
