@@ -1,4 +1,4 @@
-<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+<!-- <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
   <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
     <span class="fs-4">Angular JWT</span>
   </div>
@@ -11,4 +11,29 @@
       <li class="nav-item"><a [routerLink]="['/register']" [routerLinkActive]="'active'" class="nav-link">Register</a></li>
     </ng-template>
   </ul>
-</header>
+</header> -->
+<!-- <p>
+  <mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>My App</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+  </mat-toolbar>
+</p> -->
+<p>
+  <mat-toolbar color="primary">
+    <span>Grocery Helper</span>
+    <span class="spacer"></span>
+    <mat-nav-list>
+      <a class="login-register" [routerLink]="['/']" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">Login</a>
+      <a class="login-register" [routerLink]="['/register']" [routerLinkActive]="'active'">Register</a>
+    </mat-nav-list>
+  </mat-toolbar>
+</p>

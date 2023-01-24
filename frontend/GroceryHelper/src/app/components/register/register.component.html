@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
     <div class="col-6 offset-3">
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="mb-3">
@@ -52,4 +52,42 @@
         <button type="submit" class="btn btn-primary" [disabled]="!registerForm.valid || isSubmitted">Submit</button>
       </form>
     </div>
+  </div> -->
+  <div class="register-form-container">
+    <h1>Register</h1>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>User name</mat-label>
+          <input matInput formControlName="username">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>First name</mat-label>
+          <input matInput formControlName="firstname">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Last name</mat-label>
+          <input matInput formControlName="lastname">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password">
+        </mat-form-field>
+      </p>
+      <p>
+        <button mat-flat-button color="primary" type="submit" cdkFocusInitial [disabled]="!registerForm.valid || isSubmitted">LOG IN</button>
+      </p>
+    </form>
   </div>
