@@ -1,93 +1,38 @@
-<!-- <div class="row">
-    <div class="col-6 offset-3">
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-        <div class="mb-3">
-          <label for="inputUsername" class="form-label">Username</label>
-          <input type="email" class="form-control" id="inputName" formControlName="username">
-          <div class="form-text text-danger" *ngIf="registerFormControls['username'].invalid && (registerFormControls['username'].dirty || registerFormControls['username'].touched)">
-            <ng-container *ngIf="registerFormControls['username'].errors?.['required']">
-              Please enter a username.
-            </ng-container>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label for="inputEmail" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="inputEmail" formControlName="email">
-          <div class="form-text text-danger" *ngIf="registerFormControls['email'].invalid && (registerFormControls['email'].dirty || registerFormControls['email'].touched)">
-            <ng-container *ngIf="registerFormControls['email'].errors?.['required']">
-              Please enter your email.
-            </ng-container>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label for="inputFirstname" class="form-label">FirstName</label>
-          <input type="email" class="form-control" id="inputEmail" formControlName="firstname">
-          <div class="form-text text-danger" *ngIf="registerFormControls['firstname'].invalid && (registerFormControls['firstname'].dirty || registerFormControls['firstname'].touched)">
-            <ng-container *ngIf="registerFormControls['firstname'].errors?.['required']">
-              Please enter your email.
-            </ng-container>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label for="inputLastname" class="form-label">LastName</label>
-          <input type="email" class="form-control" id="inputLastname" formControlName="lastname">
-          <div class="form-text text-danger" *ngIf="registerFormControls['lastname'].invalid && (registerFormControls['lastname'].dirty || registerFormControls['lastname'].touched)">
-            <ng-container *ngIf="registerFormControls['lastname'].errors?.['required']">
-              Please enter your email.
-            </ng-container>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label for="inputPassword" class="form-label">Password</label>
-          <input type="password" class="form-control" id="inputPassword" formControlName="password">
-          <div class="form-text text-danger" *ngIf="registerFormControls['password'].invalid && (registerFormControls['password'].dirty || registerFormControls['password'].touched)">
-            <ng-container *ngIf="registerFormControls['password'].errors?.['required']">
-              Please enter your password.
-            </ng-container>
-            <ng-container *ngIf="registerFormControls['password'].errors?.['pattern'] && !registerFormControls['password'].errors?.['required']">
-              Password should contains a lowercase, a uppercase character and a digit.
-            </ng-container>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary" [disabled]="!registerForm.valid || isSubmitted">Submit</button>
-      </form>
-    </div>
-  </div> -->
-  <div class="register-form-container">
-    <h1>Register</h1>
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>User name</mat-label>
-          <input matInput formControlName="username">
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email">
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>First name</mat-label>
-          <input matInput formControlName="firstname">
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Last name</mat-label>
-          <input matInput formControlName="lastname">
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
-          <input matInput formControlName="password" type="password">
-        </mat-form-field>
-      </p>
-      <p>
-        <button mat-flat-button color="primary" type="submit" cdkFocusInitial [disabled]="!registerForm.valid || isSubmitted">LOG IN</button>
-      </p>
-    </form>
-  </div>
+<div class="register-form-container">
+  <h1>Register</h1>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>User name</mat-label>
+        <input matInput formControlName="username">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>First name</mat-label>
+        <input matInput formControlName="firstname">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Last name</mat-label>
+        <input matInput formControlName="lastname">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password">
+      </mat-form-field>
+    </p>
+    <p>
+      <button mat-flat-button color="primary" type="submit" cdkFocusInitial [disabled]="!registerForm.valid || isSubmitted">LOG IN</button>
+    </p>
+  </form>
+</div>
