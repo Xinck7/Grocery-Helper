@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { takeLast } from 'rxjs';
-import { Task } from '../model/task.model';
+import { Task } from '../../model/task.model';
 
 
 @Component({

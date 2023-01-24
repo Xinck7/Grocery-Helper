@@ -55,6 +55,12 @@ $ Meal planning
 $ Recipe notebook -> collection to all recipes imported (long term maybe?)
 $ Budget planning -> allows prices to be unlocked/shown for total cost estimate (maybe included in all priced tiers)
 
+## logic 
+if subscribed && tier= $tier on the components themselves
+
+on the lists then there would be a 'premium' boolean as well as tier -> if not active premium or that same tier then it would be locked -> additional maybe for same/higher tier? -> maybe just tier at all boolean no extra
+
 #case number 
 858-766-7520 for gazelle - claim for new label created so that it will ship to warehouse
 claim - c02453525
+#SHP795021
