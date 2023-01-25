@@ -32,13 +32,15 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.isSubmitted = true;
+    console.log("starting on submit from login component");
     this.authService.login(this.loginForm.value).subscribe({
       next: (result) => {
-        console.log(result);
+        console.log("inside auth from submit method on login component");
+        console.log("result is:", result);
         this.router.navigate([this.returnUrl || '/user-profile/:id']);
       },
       error: (error) => {
-        console.log(error)
+        console.log(error);
         this.toastr.error(error);
       }
     })
