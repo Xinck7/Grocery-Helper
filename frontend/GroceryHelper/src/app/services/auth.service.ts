@@ -10,20 +10,21 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-   baseUrl = environment.base_url
+  baseUrl = environment.base_url
  
   login(data: any) {
-    return this.http.post(`${this.baseUrl}/login`, data)
+    this.http.post(`${this.baseUrl}/login`, data).subscribe((result: any) => console.log("HTTP RESPONSE", result));
+    return this.http.post(`${this.baseUrl}/api-auth/login`, data)
       .pipe(map(result => {
         localStorage.setItem('authUser', JSON.stringify(result));
         return result;
       }));
   }
-  
+
   register(data: any) {
     return this.http.post(`${this.baseUrl}/api/v1/users/`, data);
-   }
- 
+  }
+
   profile(userId: string|null): Observable<any> {
     return this.http.get(`${this.baseUrl}/api/v1/users/${userId}/`);
   }
@@ -36,6 +37,7 @@ export class AuthService {
   }
 
   getAuthUser() {
+    console.log("trying to see what getAuthUser has:", JSON.parse(localStorage.getItem('authUser') as string));
     return JSON.parse(localStorage.getItem('authUser') as string);
   }
 

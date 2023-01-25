@@ -16,13 +16,13 @@
     <p>
       <mat-form-field appearance="outline">
         <mat-label>First name</mat-label>
-        <input matInput formControlName="firstname">
+        <input matInput formControlName="first_name">
       </mat-form-field>
     </p>
     <p>
       <mat-form-field appearance="outline">
         <mat-label>Last name</mat-label>
-        <input matInput formControlName="lastname">
+        <input matInput formControlName="last_name">
       </mat-form-field>
     </p>
     <p>
@@ -32,7 +32,7 @@
       </mat-form-field>
     </p>
     <p>
-      <button mat-flat-button color="primary" type="submit" cdkFocusInitial [disabled]="!registerForm.valid || isSubmitted">LOG IN</button>
+      <button mat-flat-button color="primary" type="submit" cdkFocusInitial [disabled]="!registerForm.valid || isSubmitted">Register</button>
     </p>
   </form>
 </div>

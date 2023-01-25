@@ -23,7 +23,7 @@ from django.views.generic.base import RedirectView
 urlpatterns = [
     path('api/v1/', include('grocery_helper_api.urls')),
     path('admin/', admin.site.urls),
-    path('login/', obtain_auth_token, name="obtain auth token"),
+    path('token/', obtain_auth_token, name="obtain auth token"),
     path('api-auth/', include('rest_framework.urls')),
     re_path(r'^$', RedirectView.as_view(url=reverse_lazy('api-root'), permanent=False)), 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
