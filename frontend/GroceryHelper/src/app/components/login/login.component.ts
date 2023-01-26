@@ -4,6 +4,7 @@ import { AuthService } from "../../services/auth.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from 'ngx-toastr';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -29,15 +30,15 @@ export class LoginComponent implements OnInit {
     });
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'];
   }
-
+  
   onSubmit() {
     this.isSubmitted = true;
-    console.log("starting on submit from login component");
     this.authService.login(this.loginForm.value).subscribe({
-      next: (result) => {
-        console.log("inside auth from submit method on login component");
-        console.log("result is:", result);
-        this.router.navigate([this.returnUrl || '/user-profile/:id']);
+      next: (data: any) => {
+        console.log("data before setLoggedInUser data id", data.id);
+        this.authService.setLoggedInUser(data);
+        console.log("data in login auth service in the submit before next", data);
+        this.router.navigateByUrl(`/user-profile/${data.id}`);
       },
       error: (error) => {
         console.log(error);
@@ -47,8 +48,5 @@ export class LoginComponent implements OnInit {
     .add(() => {
       this.isSubmitted = false;
     });
-  }
-  get loginFormControls() {
-    return this.loginForm.controls;
   }
 }
