@@ -37,13 +37,13 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
-    path: '**',
-    component: NotFoundComponent,
-  },
-  {
     path: 'user-profile/:id',
     component: UserProfileComponent, canActivate: [AuthGuard]
-  }
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
+  },
 ];
 
 @NgModule({

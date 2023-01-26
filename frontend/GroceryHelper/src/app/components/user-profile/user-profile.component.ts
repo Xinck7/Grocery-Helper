@@ -19,35 +19,17 @@ export class UserProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.fetchProfile();
-  }
-
-  fetchProfile() {
+    // this.fetchProfile();
     const userId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.authService.profile(userId).subscribe({
-      next: (result) => {
-        this.user = result;
+    console.log("userId value from the snapshot",userId);
+    this.authService.getProfile(userId).subscribe({
+      next: (data) => {
+        console.log("result", data);
+        this.user = data;
       },
       error: (error) => {
         this.toastr.error(error);
       }
     });
   }
-  // userProfile: UserProfile|null = null;
-
-  // constructor(private userProfileService: UserProfileService, private activatedRoute: ActivatedRoute) { }
-
-  // ngOnInit(): void {
-  //   const userId = this.activatedRoute.snapshot.paramMap.get('id');
-  //   this.userProfileService.getUserProfile(userId).subscribe({
-  //       next: (data) => {
-  //         console.log(data);
-  //         this.userProfile = data;
-  //       },
-  //       error: (error) => {
-  //         console.log(error);
-  //       }
-  //     }
-  //   );
-  // }
 }
