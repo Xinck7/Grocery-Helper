@@ -35,10 +35,10 @@ export class LoginComponent implements OnInit {
     this.isSubmitted = true;
     this.authService.login(this.loginForm.value).subscribe({
       next: (data: any) => {
-        console.log("data before setLoggedInUser data id", data.id);
         this.authService.setLoggedInUser(data);
-        console.log("data in login auth service in the submit before next", data);
-        this.router.navigateByUrl(`/user-profile/${data.id}`);
+        this.router.navigateByUrl(`/user-profile/${data.id}`).then(() => {
+          window.location.reload();
+        });;
       },
       error: (error) => {
         console.log(error);

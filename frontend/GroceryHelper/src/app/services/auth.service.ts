@@ -30,26 +30,16 @@ export class AuthService {
   }
 
   logout() {
-    return this.http.get(`${this.baseUrl}/api/v1/logout/`)
-      .pipe(tap(() => {
-        localStorage.removeItem('authUser')
-      }));
+    localStorage.removeItem('authUser');
   }
 
   getAuthUser() {
     return JSON.parse(localStorage.getItem('authUser') as string);
   }
   
-  setLoggedInUser(userData: LoggedInUser): void {
-    if (localStorage.getItem('userData') !== JSON.stringify(userData)) {
-      localStorage.setItem('userData', JSON.stringify(userData));
+  setLoggedInUser(authUser: LoggedInUser): void {
+    if (localStorage.getItem('authUser') !== JSON.stringify(authUser)) {
+      localStorage.setItem('authUser', JSON.stringify(authUser));
     }
    }
-
-  get isLoggedIn() {
-    if (localStorage.getItem('authUser')) {
-      return true;
-    }
-    return false;
-  }
 }
