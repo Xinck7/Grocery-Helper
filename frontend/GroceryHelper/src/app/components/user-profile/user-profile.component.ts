@@ -21,10 +21,8 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
     // this.fetchProfile();
     const userId = this.activatedRoute.snapshot.paramMap.get('id');
-    console.log("userId value from the snapshot",userId);
     this.authService.getProfile(userId).subscribe({
       next: (data) => {
-        console.log("result", data);
         this.user = data;
       },
       error: (error) => {

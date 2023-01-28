@@ -2,7 +2,13 @@
   <mat-toolbar color="primary">
     <span>Grocery Helper</span>
     <span class="spacer"></span>
-    <button mat-button class="login-register" [routerLink]="['/']" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">Login</button>
-    <button mat-button class="login-register" [routerLink]="['/register']" [routerLinkActive]="'active'">Register</button>
+    
+    <!-- if not logged in -->
+    <button mat-button class="login-register"  *ngIf="!this.loggedIn"[routerLink]="['/']" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">Login</button>
+    <button mat-button class="login-register" *ngIf="!this.loggedIn" [routerLink]="['/register']" [routerLinkActive]="'active'">Register</button>
+
+    <!-- Logged in  -->
+    <button mat-button class="login-register" *ngIf="this.loggedIn" [routerLink]="['/']" [routerLinkActive]="'active'" (click)="handleLogout()">Logout</button>
+
   </mat-toolbar>
 </p>

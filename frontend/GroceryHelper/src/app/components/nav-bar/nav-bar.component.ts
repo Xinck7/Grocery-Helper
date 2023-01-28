@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent {
+  loggedIn!: boolean;
 
   constructor(
     public authService: AuthService,
@@ -16,16 +17,19 @@ export class NavBarComponent {
     private router: Router
   ) { }
 
-  ngOnInit(): void { }
+
+  ngOnInit(): void {
+    const authUser = JSON.parse(localStorage.getItem('authUser') || '{}');
+    if (authUser.token){
+      this.loggedIn = true
+     }
+     else {
+      this.loggedIn = false
+     }
+   }
 
   handleLogout() {
-    this.authService.logout().subscribe({
-      next: (result) => {
-        this.router.navigate(['/']);
-      },
-      error: (error) => {
-        this.toastr.error(error);
-      }
-    });
+    this.authService.logout()
+    this.loggedIn = false
   }
 }
