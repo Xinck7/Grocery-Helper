@@ -13,8 +13,6 @@ export class NavBarComponent {
 
   constructor(
     public authService: AuthService,
-    private toastr: ToastrService,
-    private router: Router
   ) { }
 
 
