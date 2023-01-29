@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
         this.authService.setLoggedInUser(data);
         this.router.navigateByUrl(`/user-profile/${data.id}`).then(() => {
           window.location.reload();
-        });;
+        });
       },
       error: (error) => {
         console.log(error);
