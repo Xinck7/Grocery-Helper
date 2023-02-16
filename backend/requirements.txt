@@ -1,5 +1,5 @@
 asgiref
-Django==3.2.16
+Django==3.2.18
 django-cors-headers==3.13.0
 djangorestframework==3.13.1
 psycopg2-binary==2.9.3
