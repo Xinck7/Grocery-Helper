@@ -34,7 +34,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ToastrModule } from 'ngx-toastr';
-import { MatGridListModule } from '@angular/material/grid-list'
+
 
 @NgModule({
   declarations: [
@@ -64,7 +64,6 @@ import { MatGridListModule } from '@angular/material/grid-list'
     MatFormFieldModule,
     ReactiveFormsModule,
     MatCardModule,
-    MatGridListModule,
     HttpClientModule,
     ToastrModule.forRoot({
       timeOut: 15000, // 15 seconds
