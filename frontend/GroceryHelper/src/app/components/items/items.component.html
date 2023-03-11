@@ -1,1 +1,12 @@
-<p>items works!</p>
+<div class="centering">
+    <mat-card *ngFor="let item of itemList" class="item-card">
+        <mat-card-header class="item-header">Name: {{ item.name }}</mat-card-header>
+        <img mat-card-md-image src="{{ item.picture }}" alt="no photo">
+        <mat-card-content>Location: {{ item.location }}</mat-card-content>
+        <mat-card-content>Price: ${{ item.price }}</mat-card-content>
+        <mat-card-content>Aisle: {{ item.aisle }}</mat-card-content>
+        <mat-card-actions>
+            <button mat-button (click)="addSelectedToList()">Add to list</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
