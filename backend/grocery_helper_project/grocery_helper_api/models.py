@@ -38,7 +38,7 @@ class List(models.Model):
     name = models.CharField(max_length=100)
     ingredients = models.ManyToManyField(Ingredient)
     items = models.ManyToManyField(Item)
-    price = models.DecimalField(null=True, blank=True, decimal_places=2, max_digits=10, help_text="total price of items and ingredients", default=0)
+    # price = models.DecimalField(null=True, blank=True, decimal_places=2, max_digits=10, help_text="total price of items and ingredients", default=0)
     owner = models.CharField(max_length=100, help_text="Whose list is it anyways?", default='root')
     added_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="list")
     show_only_your_added_by = models.BooleanField(default=False, help_text="Show only your stuff or look at the catalog")
@@ -51,7 +51,7 @@ class List(models.Model):
 class Recipe(models.Model):
     name = models.CharField(max_length=100)
     ingredients = models.ManyToManyField(Ingredient)
-    price = models.DecimalField(null=True, blank=True, decimal_places=2, max_digits=10, help_text="how much in USD? eg 3")
+    # price = models.DecimalField(null=True, blank=True, decimal_places=2, max_digits=10, help_text="how much in USD? eg 3")
     time_to_cook = models.DecimalField(null=True, blank=True, decimal_places=1, max_digits=3, help_text="how long to make it start to finish?", default=0)
     added_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="recipe")
     show_only_your_added_by = models.BooleanField(default=False, help_text="Show only your stuff or look at the catalog")

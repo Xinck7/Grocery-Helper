@@ -6,7 +6,37 @@
         <mat-card-content>Price: ${{ item.price }}</mat-card-content>
         <mat-card-content>Aisle: {{ item.aisle }}</mat-card-content>
         <mat-card-actions>
-            <button mat-button (click)="addSelectedToList()">Add to list</button>
+            <button mat-button color="accent"(click)="addSelectedToList()"><span class='material-icons'>add</span></button>
+            <button mat-button (click)="editItem()"><span class='material-icons'>edit</span></button>
+            <button mat-button color="warn" (click)="deleteItem()"><span class="material-icons">delete</span></button>
         </mat-card-actions>
     </mat-card>
+    <button mat-raised-button (click)="newItem()">Add new item</button>
+    <!-- <h1 mat-dialog-title>Add new item</h1>
+    <div mat-dialog-content>
+        <mat-form-field appearance="outline">
+            <mat-label>name</mat-label>
+            <input matInput [(ngModel)]="itemForm.name">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>location</mat-label>
+            <input matInput [(ngModel)]="itemForm.location">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>aisle</mat-label>
+            <input matInput [(ngModel)]="itemForm.aisle">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>price</mat-label>
+            <input matInput [(ngModel)]="itemForm.price">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>picture</mat-label>
+            <input matInput [(ngModel)]="itemForm.picture">
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button color="accent" [mat-dialog-close]="itemForm" cdkFocusInitial>Add</button>
+        <button mat-raised-button color="warn" (click)="cancel()">Cancel</button>
+    </div> -->
 </div>

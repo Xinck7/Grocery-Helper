@@ -1,5 +1,6 @@
 from items and ingredients
     #todo can price be called from a website? or more?
+    #todo create categories for items to fit within so that they can be filtered further to pick faster
 
 from list
     #todo need to calculate total price of items
@@ -9,3 +10,12 @@ from recipes section
     #todo calculate the individual prices
     #todo need to implement selectable options of ingredients
     #todo need to implement frontend how to dynamically add a new ingredient in a modal if you haven't already
+
+Braindump 3-11-23
+- to complete making item will directly implement into ingredients 
+so it is not worth doing ingredients until thats done
+- need to generate connection between add to list button and the list itself
+- need to build out one list will graphically look like
+- after that need a modal for which list you want to look at
+- accordian of list of lists?
+- 

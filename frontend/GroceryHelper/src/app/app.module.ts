@@ -34,7 +34,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ToastrModule } from 'ngx-toastr';
-
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -65,6 +65,7 @@ import { ToastrModule } from 'ngx-toastr';
     ReactiveFormsModule,
     MatCardModule,
     HttpClientModule,
+    MatDialogModule,
     ToastrModule.forRoot({
       timeOut: 15000, // 15 seconds
       closeButton: true,
