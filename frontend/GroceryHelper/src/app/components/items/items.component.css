@@ -1,9 +1,26 @@
 .item-card {
-    max-width: 400px;
+    max-width: 500px;
     align-items: center;
+    margin: 5%;
 }
+
 .centering {
-    display: flex;
+    display: grid;
     justify-content: center;
-    align-items: center;
+}
+
+.mat-mdc-raised-button {
+    background-color: green;
+}
+
+.mat-mdc-card-content {
+    color: white;
+}
+
+.mat-mdc-card-header {
+    color: white;
+}
+
+.mat-mdc-card-actions{
+    padding: 15px;
 }

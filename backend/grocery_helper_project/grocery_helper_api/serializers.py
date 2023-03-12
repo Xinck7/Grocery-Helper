@@ -1,7 +1,8 @@
 from rest_framework import serializers
-# from django.db.models import Sum
+from django.db.models import Sum
 from grocery_helper_api.models import Ingredient, Item, List, Recipe, User
 from django.contrib.auth import get_user_model
+
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,6 +18,9 @@ class ItemSerializer(serializers.ModelSerializer):
 class ListSerializer(serializers.ModelSerializer):
     ingredients = IngredientSerializer(many=True)
     items = ItemSerializer(many=True)
+    # item_price_total = Item.objects.aggregate(Sum('price'))
+    # ingredient_price_total = Ingredient.objects.aggregate(Sum('price'))
+    # price = item_price_total + ingredient_price_total 
     class Meta:
         model = List
         fields = '__all__'

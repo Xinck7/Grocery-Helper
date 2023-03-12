@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { tap } from 'rxjs';
 import { ItemsService } from 'src/app/services/items.service';
+// import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-items',
@@ -14,7 +15,8 @@ export class ItemsComponent implements OnInit {
   itemList: any;
   constructor(
     // private formBuilder: FormBuilder
-    private itemsService: ItemsService
+    private itemsService: ItemsService,
+    // public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -32,7 +34,7 @@ export class ItemsComponent implements OnInit {
 
   // Create new item with form control for the item
   newItem(){
-    
+    console.log("you TOTALLY added a new item to generate modal");
   }
 
   // Get exisiting items owned by current logged in user
@@ -44,17 +46,22 @@ export class ItemsComponent implements OnInit {
 
   // Edit items
   editItem(){
-
+    console.log("edit button clicked");
   }
 
   // Get all items
   getAllItems(){
 
   }
+  
+  //Delete item
+  deleteItem(){
+    console.log("delete button clicked");
+  }
 
   // add selected items to a list
   addSelectedToList(){
-    console.log("you TOTALLY added a new item");
+    console.log("you TOTALLY added a new item to a list");
   }
 
 
