@@ -5,7 +5,7 @@ djangorestframework==3.13.1
 psycopg2-binary==2.9.3
 python-decouple==3.6
 pytz==2022.1
-sqlparse==0.4.2
+sqlparse==0.4.4
 Celery
 django-celery-beat 
 django-celery-results # currently requires Django 4.0 or older
