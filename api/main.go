@@ -43,15 +43,15 @@ type Ingredient struct(
 // collection of ingredients to add to a list
 type Recipe struct(
 	gorm.Model
-	Ingredients Ingredient
+	Ingredients [...]Ingredient
 	Added_by User
 )
 
 // collection to buy
 type List struct(
 	gorm.Model
-	Item Items
-	Ingredients Ingredient
+	Item [...]Items
+	Ingredients [...]Ingredient
 )
 
 
