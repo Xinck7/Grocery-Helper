@@ -3,47 +3,34 @@ services:
   db:
     image: postgres:15-alpine
     init: true
-    container_name: grocery_db
+    container_name: grocery-db
     volumes:
       - ./pg_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: 'svc_grocery_db'
-      POSTGRES_PASSWORD: 'groceryService2022!@#'
-      POSTGRES_DB: 'grocery_helper'
+    env_file: ./api/.env
     ports:
       - "5432:5432"
-  rabbitmq:
-    image: rabbitmq:3-management
+  api:
+    image: grocery-api:test
     init: true
-    container_name: grocery_rabbitmq
-    environment:
-      RABBITMQ_DEFAULT_USER: 'rabbitmq_user'
-      RABBITMQ_DEFAULT_PASS: 'RabbitMQMGMT2023!@#'
-    ports:
-      - "8080:15672"
-    volumes:
-      - ./rabbitmq/var/lib/rabbitmq:/var/lib/rabbitmq
-  backend:
-    image: grocery_backend:test
-    init: true
-    container_name: grocery_backend
+    container_name: grocery-api
     restart: on-failure:5
+    env_file: ./api/.env
     volumes:
-      - ./backend:/opt
+      - ./api:/usr/src/app
     depends_on:
       - db
     ports:
-      - "8000:8000"
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-  frontend:
-    image: grocery_frontend:test
-    init: true
-    container_name: grocery_frontend
-    volumes:
-      - ./frontend:/opt
-    depends_on:
-      - backend
-    # command: bash -c "sleep 15000"
-    command: bash -c "ng serve --host 0.0.0.0"
-    ports:
-      - "4200:4200"
+      - "8080:8080"
+    command: sleep 15000 #go run main.go
+  # frontend:
+  #   image: grocery-frontend:test
+  #   init: true
+  #   container_name: grocery-frontend
+  #   volumes:
+  #     - ./frontend:/opt
+  #   depends_on:
+  #     - backend
+  #   command: bash -c "sleep 15000"
+  #   # command: bash -c "ng serve --host 0.0.0.0"
+  #   ports:
+  #     - "4200:4200"
