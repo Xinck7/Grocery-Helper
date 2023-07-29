@@ -14,47 +14,49 @@ import (
 	"gorm.io/gorm"
 )
 
-// models
+// global var
+var db *gorm.DB
 
+// models
 type User struct {
 	Username string
 }
 
 type Item struct {
-	ID       int    `json:"id"`
-	Name     string `json:"name"`
-	Obtained bool   `json:"obtained"`
-	Store    string `json:"store"`
-	Aisle    int8   `json:"aisle"`
-	Quantity int8   `json:"quantity"`
-	Price    int64  `json:"price"`
-	// Added_by User   `json:"added_by" gorm:"embedded"`
+	ID       int
+	Name     string
+	Obtained bool
+	Store    string
+	Aisle    int8
+	Quantity int8
+	Price    int64
+	// Added_by User
 	//todo Picture
 }
 
 type Ingredient struct {
-	ID       int    `json:"id"`
-	Name     string `json:"name"`
-	Obtained bool   `json:"obtained"`
-	Store    string `json:"store"`
-	Aisle    int8   `json:"aisle"`
-	Quantity int8   `json:"quantity"`
-	Price    int64  `json:"price"`
-	Added_by User   `json:"added_by" gorm:"embedded"`
+	ID       int
+	Name     string
+	Obtained bool
+	Store    string
+	Aisle    int8
+	Quantity int8
+	Price    int64
+	Added_by User `gorm:"embedded"`
 	//todo Picture
 }
 
 // collection of ingredients to add to a list
 type Recipe struct {
 	ID          int
-	Ingredients Ingredient `json:"ingredients" gorm:"embedded"`
+	Ingredients Ingredient `gorm:"embedded"`
 	Added_by    User       `gorm:"embedded"`
 }
 
 // collection to buy
 type List struct {
 	Items       Item       `gorm:"embedded"`
-	Ingredients Ingredient `json:"ingredients" gorm:"embedded"`
+	Ingredients Ingredient `gorm:"embedded"`
 	Added_by    User       `gorm:"embedded"`
 }
 
@@ -68,18 +70,18 @@ var testItems = []Item{
 
 // CRUD
 func getItems(c *gin.Context) {
+	// result := db.Find(&Item)
 	c.IndentedJSON(http.StatusOK, testItems)
-	// items := db.Find(&Items)
+
 	// c.Data(http.StatusOK, items)
 }
 
 func createItem(c *gin.Context) {
 	var newItem Item
-
+	db.Create(&newItem)
 	if err := c.BindJSON(&newItem); err != nil {
 		return
 	}
-
 	testItems = append(testItems, newItem)
 	c.IndentedJSON(http.StatusCreated, newItem)
 }
@@ -87,6 +89,9 @@ func createItem(c *gin.Context) {
 func itemById(c *gin.Context) {
 	id := c.Param("id")
 	intid, err := strconv.Atoi(id)
+	if err != nil {
+		return
+	}
 	item, err := getItemById(intid)
 
 	if err != nil {
@@ -123,8 +128,9 @@ func main() {
 	}
 	db.AutoMigrate(&User{}, &Item{}, &Ingredient{}, &Recipe{}, &List{})
 
-	//?Run app
 	router := gin.Default()
+
+	// Get
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "Hurray!",
@@ -132,6 +138,10 @@ func main() {
 	})
 	router.GET("/item", getItems)
 	router.GET("/item/:id", itemById)
+
+	// Post
 	router.POST("/item", createItem)
+
+	//?Run app
 	router.Run()
 }

@@ -9,4 +9,4 @@ cd $TOP
 cd api && docker build -t grocery-api:test . && cd ../
 
 #Frontend
-# cd frontend && docker build -t grocery_frontend:test . && cd ../
+cd frontend && docker build -t grocery-frontend:live . && cd ../

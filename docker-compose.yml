@@ -22,15 +22,12 @@ services:
     ports:
       - "8080:8080"
     command: sleep 15000 #go run main.go
-  # frontend:
-  #   image: grocery-frontend:test
-  #   init: true
-  #   container_name: grocery-frontend
-  #   volumes:
-  #     - ./frontend:/opt
-  #   depends_on:
-  #     - backend
-  #   command: bash -c "sleep 15000"
-  #   # command: bash -c "ng serve --host 0.0.0.0"
-  #   ports:
-  #     - "4200:4200"
+  frontend:
+    image: grocery-frontend:live
+    init: true
+    container_name: grocery-frontend
+    volumes:
+      - ./frontend:/opt/groceryhelper
+    command: bash -c "sleep 15000" #npm run start
+    ports:
+      - "3000:3000"
