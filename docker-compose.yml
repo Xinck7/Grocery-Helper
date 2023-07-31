@@ -28,6 +28,6 @@ services:
     container_name: grocery-frontend
     volumes:
       - ./frontend:/opt/groceryhelper
-    command: bash -c "sleep 15000" #npm run start
+    command: bash -c "live-server groceryhelper --port=3000" #npm run start #todo add every 10 second refresh of tailwind
     ports:
       - "3000:3000"

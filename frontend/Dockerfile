@@ -10,3 +10,4 @@ RUN apt install -y curl
 RUN curl -s https://deb.nodesource.com/setup_18.x | sh
 RUN apt install -y nodejs
 RUN npm install -g npm@9.8.1
+RUN npm install -g live-server
