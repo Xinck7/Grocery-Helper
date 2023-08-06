@@ -11,9 +11,13 @@ This application is to help keep track of what you need at the grocery store:
 ## Tools used initially
 
 1. Docker for all containers/runtime
-2. React frontend
-3. Golang backend
-4. Redis worker if needed
+2. Golang backend
+3. Tailwind CSS
+4. Htmx frontend
+5. Redis worker if needed
+
+GoTH stack
+![Gopher Image](./y_notes/goth-stack-gopher.png)
 
 ## Tools to use once launching
 
@@ -31,4 +35,6 @@ This application is to help keep track of what you need at the grocery store:
 
 ## Run Locally
 
-cd frontend && docker build -t grocery_frontend:test . && cd ../
+``` bash
+./z_env_scripts/build-images.sh && docker compose up -d
+```
