@@ -9,30 +9,37 @@ import (
 func Routes() {
 	route := gin.Default()
 
-	// items
-	route.POST("/items", controllers.CreateItem)
-	route.GET("/items", controllers.GetAllItems)
-	route.PUT("/items/:idTodo", controllers.UpdateItem)
-	route.DELETE("/items/:idTodo", controllers.DeleteItem)
+	const itemsBaseRoute = "/items"
+	const itemsIDRoute = "/:idItem"
+	route.POST(itemsBaseRoute, controllers.CreateItem)
+	route.GET(itemsBaseRoute, controllers.GetAllItems)
+	route.GET(itemsBaseRoute+itemsIDRoute, controllers.GetItemByID)
+	route.PUT(itemsBaseRoute+itemsIDRoute, controllers.UpdateItem)
+	route.DELETE(itemsBaseRoute+itemsIDRoute, controllers.DeleteItem)
 
-	// ingredients
-	route.POST("/ingredients", controllers.CreateIngredient)
-	route.GET("/ingredients", controllers.GetAllIngredients)
-	route.PUT("/ingredients/:idIngredient", controllers.UpdateIngredient)
-	route.DELETE("/ingredients/:idIngredient", controllers.DeleteIngredient)
+	const ingredientsBaseRoute = "/ingredients"
+	const ingredientsIDRoute = "/:idIngredient"
+	route.POST(ingredientsBaseRoute, controllers.CreateIngredient)
+	route.GET(ingredientsBaseRoute, controllers.GetAllIngredients)
+	route.GET(ingredientsBaseRoute+ingredientsIDRoute, controllers.GetIngredientByID)
+	route.PUT(ingredientsBaseRoute+ingredientsIDRoute, controllers.UpdateIngredient)
+	route.DELETE(ingredientsBaseRoute+ingredientsIDRoute, controllers.DeleteIngredient)
 
-	// recipes
-	route.POST("/recipes", controllers.CreateRecipe)
-	route.GET("/recipes", controllers.GetAllRecipes)
-	route.PUT("/recipes/:idRecipe", controllers.UpdateRecipe)
-	route.DELETE("/recipes/:idRecipe", controllers.DeleteRecipe)
+	const listsBaseRoute = "/lists"
+	const listIDRoute = "/:idList"
+	route.POST(listsBaseRoute, controllers.CreateList)
+	route.GET(listsBaseRoute, controllers.GetAllLists)
+	route.GET(listsBaseRoute+listIDRoute, controllers.GetListByID)
+	route.PUT(listsBaseRoute+listIDRoute, controllers.UpdateList)
+	route.DELETE(listsBaseRoute+listIDRoute, controllers.DeleteList)
 
-	// lists
-	route.POST("/lists", controllers.CreateList)
-	route.GET("/lists", controllers.GetAllLists)
-	route.PUT("/lists/:idlist", controllers.UpdateList)
-	route.DELETE("/lists/:idList", controllers.DeleteList)
+	const recipesBaseRoute = "/recipes"
+	const recipesIDRoute = "/:idRecipe"
+	route.POST(recipesBaseRoute, controllers.CreateRecipe)
+	route.GET(recipesBaseRoute, controllers.GetAllRecipes)
+	route.GET(recipesBaseRoute+recipesIDRoute, controllers.GetRecipeByID)
+	route.PUT(recipesBaseRoute+recipesIDRoute, controllers.UpdateRecipe)
+	route.DELETE(recipesBaseRoute+recipesIDRoute, controllers.DeleteRecipe)
 
-	// Run
 	route.Run()
 }
