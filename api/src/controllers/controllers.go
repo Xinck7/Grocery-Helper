@@ -39,11 +39,13 @@ type listRequest struct {
 	Items       []models.Item       `json:"items"`
 	Ingredients []models.Ingredient `json:"ingredients"`
 	Recipes     []models.Recipe     `json:"recipes"`
+	Price       int64               `json:"price"`
 }
 
 type recipeRequest struct {
 	Name        string              `json:"name"`
 	Ingredients []models.Ingredient `json:"ingredients"`
+	Price       int64               `json:"price"`
 }
 
 // ? responses section
@@ -95,6 +97,10 @@ func CreateItem(c *gin.Context) {
 	var response itemResponse
 	response.ID = item.ID
 	response.Name = item.Name
+	response.Store = item.Store
+	response.Aisle = item.Aisle
+	response.Quantity = item.Quantity
+	response.Price = item.Price
 
 	c.JSON(http.StatusCreated, response)
 }
@@ -224,6 +230,11 @@ func CreateIngredient(c *gin.Context) {
 	var response ingredientResponse
 	response.ID = ingredient.ID
 	response.Name = ingredient.Name
+	response.Obtained = ingredient.Obtained
+	response.Store = ingredient.Store
+	response.Aisle = ingredient.Aisle
+	response.Quantity = ingredient.Quantity
+	response.Price = ingredient.Price
 
 	c.JSON(http.StatusCreated, response)
 }
@@ -356,6 +367,9 @@ func CreateList(c *gin.Context) {
 	var response listResponse
 	response.ID = list.ID
 	response.Name = list.Name
+	response.Items = list.Items
+	response.Ingredients = list.Ingredients
+	response.Recipes = list.Recipes
 
 	c.JSON(http.StatusCreated, response)
 }
@@ -394,6 +408,7 @@ func GetListByID(c *gin.Context) {
 	response.Items = list.Items
 	response.Ingredients = list.Ingredients
 	response.Recipes = list.Recipes
+	response.Price = list.Price
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
@@ -480,6 +495,7 @@ func CreateRecipe(c *gin.Context) {
 	var response recipeResponse
 	response.ID = recipe.ID
 	response.Name = recipe.Name
+	response.Ingredients = recipe.Ingredients
 
 	c.JSON(http.StatusCreated, response)
 }
@@ -514,6 +530,7 @@ func GetRecipeByID(c *gin.Context) {
 	var response recipeResponse
 	response.ID = recipe.ID
 	response.Ingredients = recipe.Ingredients
+	response.Price = recipe.Price
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
@@ -552,6 +569,7 @@ func UpdateRecipe(c *gin.Context) {
 
 	var response recipeResponse
 	response.ID = recipe.ID
+	response.Name = recipe.Name
 	response.Ingredients = recipe.Ingredients
 
 	c.JSON(http.StatusCreated, response)

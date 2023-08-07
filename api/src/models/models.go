@@ -42,7 +42,7 @@ type List struct {
 	Items       []Item       `gorm:"many2many:list_items;"`
 	Ingredients []Ingredient `gorm:"many2many:list_ingredients;"`
 	Recipes     []Recipe     `gorm:"many2many:list_recipes;"`
-	Price       int16
+	Price       int64
 	// Added_by    User
 }
 
@@ -51,6 +51,6 @@ type Recipe struct {
 	gorm.Model
 	Name        string
 	Ingredients []Ingredient `gorm:"many2many:recipe_ingredients;"`
-	Price       int16
+	Price       int64
 	// Added_by    User
 }
