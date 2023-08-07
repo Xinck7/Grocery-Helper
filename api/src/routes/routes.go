@@ -10,7 +10,7 @@ func Routes() {
 	route := gin.Default()
 
 	const itemsBaseRoute = "/items"
-	const itemsIDRoute = "/:idItem"
+	const itemsIDRoute = "/:id"
 	route.POST(itemsBaseRoute, controllers.CreateItem)
 	route.GET(itemsBaseRoute, controllers.GetAllItems)
 	route.GET(itemsBaseRoute+itemsIDRoute, controllers.GetItemByID)
@@ -18,7 +18,7 @@ func Routes() {
 	route.DELETE(itemsBaseRoute+itemsIDRoute, controllers.DeleteItem)
 
 	const ingredientsBaseRoute = "/ingredients"
-	const ingredientsIDRoute = "/:idIngredient"
+	const ingredientsIDRoute = "/:id"
 	route.POST(ingredientsBaseRoute, controllers.CreateIngredient)
 	route.GET(ingredientsBaseRoute, controllers.GetAllIngredients)
 	route.GET(ingredientsBaseRoute+ingredientsIDRoute, controllers.GetIngredientByID)
@@ -26,7 +26,7 @@ func Routes() {
 	route.DELETE(ingredientsBaseRoute+ingredientsIDRoute, controllers.DeleteIngredient)
 
 	const listsBaseRoute = "/lists"
-	const listIDRoute = "/:idList"
+	const listIDRoute = "/:id"
 	route.POST(listsBaseRoute, controllers.CreateList)
 	route.GET(listsBaseRoute, controllers.GetAllLists)
 	route.GET(listsBaseRoute+listIDRoute, controllers.GetListByID)
@@ -34,7 +34,7 @@ func Routes() {
 	route.DELETE(listsBaseRoute+listIDRoute, controllers.DeleteList)
 
 	const recipesBaseRoute = "/recipes"
-	const recipesIDRoute = "/:idRecipe"
+	const recipesIDRoute = "/:id"
 	route.POST(recipesBaseRoute, controllers.CreateRecipe)
 	route.GET(recipesBaseRoute, controllers.GetAllRecipes)
 	route.GET(recipesBaseRoute+recipesIDRoute, controllers.GetRecipeByID)

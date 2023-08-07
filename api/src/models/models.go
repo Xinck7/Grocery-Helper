@@ -39,9 +39,9 @@ type Ingredient struct {
 type List struct {
 	gorm.Model
 	Name        string
-	Items       []Item       `gorm:"foreignKey:Name; references:Name constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	Ingredients []Ingredient `gorm:"foreignKey:Name; references:Name constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	Recipes     []Recipe     `gorm:"foreignKey:Name; references:Name constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Items       []Item       `gorm:"many2many:list_items;"`
+	Ingredients []Ingredient `gorm:"many2many:list_ingredients;"`
+	Recipes     []Recipe     `gorm:"many2many:list_recipes;"`
 	Price       int16
 	// Added_by    User
 }
@@ -50,7 +50,7 @@ type List struct {
 type Recipe struct {
 	gorm.Model
 	Name        string
-	Ingredients []Ingredient `gorm:"foreignKey:Name; references:Name constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Ingredients []Ingredient `gorm:"many2many:recipe_ingredients;"`
 	Price       int16
 	// Added_by    User
 }

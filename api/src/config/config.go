@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"xinck/api/src/models"
 
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
@@ -22,6 +23,7 @@ func ConnectDB() *gorm.DB {
 		// log.Fatal("unable to connect to database")
 		panic("failed to connect to database")
 	}
+	db.Debug().AutoMigrate(&models.User{}, &models.Ingredient{}, &models.Item{}, &models.List{}, &models.Recipe{})
 	return db
 }
 

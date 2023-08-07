@@ -70,11 +70,11 @@ type recipeResponse struct {
 //! CRUD Methods
 
 // ? Items section
-func CreateItem(context *gin.Context) {
+func CreateItem(c *gin.Context) {
 	var data itemRequest
 
-	if err := context.Bind(&data); err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err := c.Bind(&data); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -88,7 +88,7 @@ func CreateItem(context *gin.Context) {
 
 	result := db.Create(&item)
 	if result.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong creating item to db"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong creating item to db"})
 		return
 	}
 
@@ -96,75 +96,34 @@ func CreateItem(context *gin.Context) {
 	response.ID = item.ID
 	response.Name = item.Name
 
-	context.JSON(http.StatusCreated, response)
+	c.JSON(http.StatusCreated, response)
 }
 
-func GetAllItems(context *gin.Context) {
+func GetAllItems(c *gin.Context) {
 	var item []models.Item
 
 	err := db.Find(&item)
 	if err.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Error getting all items"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Error getting all items"})
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
 		"message": "Success",
 		"data":    item,
 	})
 }
 
-func GetItemByID(context *gin.Context) {
-	var data itemRequest
+func GetItemByID(c *gin.Context) {
 
-	reqParamId := context.Param("idItem")
+	reqParamId := c.Param("id")
 	iditem := cast.ToUint(reqParamId)
-
-	if err := context.BindJSON(&data); err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
 	item := models.Item{}
 
 	itemById := db.Where("id = ?", iditem).First(&item)
 	if itemById.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "item not found"})
-		return
-	}
-
-	context.JSON(http.StatusOK, gin.H{
-		"status":  "200",
-		"message": "Success",
-		"data":    itemById,
-	})
-}
-
-func UpdateItem(context *gin.Context) {
-	var data itemRequest
-
-	reqParamId := context.Param("idItem")
-	iditem := cast.ToUint(reqParamId)
-
-	item := models.Item{}
-
-	itemById := db.Where("id = ?", iditem).First(&item)
-	if itemById.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "item not found"})
-		return
-	}
-
-	item.Name = data.Name
-	item.Obtained = data.Obtained
-	item.Store = data.Store
-	item.Aisle = data.Aisle
-	item.Quantity = data.Quantity
-	item.Price = data.Price
-
-	result := db.Save(&item)
-	if result.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong updating item to db"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "item not found"})
 		return
 	}
 
@@ -177,19 +136,62 @@ func UpdateItem(context *gin.Context) {
 	response.Quantity = item.Quantity
 	response.Price = item.Price
 
-	context.JSON(http.StatusCreated, response)
+	c.JSON(http.StatusOK, gin.H{
+		"status":  "200",
+		"message": "Success",
+		"data":    response,
+	})
 }
 
-func DeleteItem(context *gin.Context) {
+func UpdateItem(c *gin.Context) {
+	var data itemRequest
+
+	reqParamId := c.Param("id")
+	iditem := cast.ToUint(reqParamId)
+
 	item := models.Item{}
 
-	reqParamId := context.Param("idItem")
+	itemById := db.Where("id = ?", iditem).First(&item)
+	if itemById.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "item not found"})
+		return
+	}
+
+	item.Name = data.Name
+	item.Obtained = data.Obtained
+	item.Store = data.Store
+	item.Aisle = data.Aisle
+	item.Quantity = data.Quantity
+	item.Price = data.Price
+
+	result := db.Save(&item)
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong updating item to db"})
+		return
+	}
+
+	var response itemResponse
+	response.ID = item.ID
+	response.Name = item.Name
+	response.Obtained = item.Obtained
+	response.Store = item.Store
+	response.Aisle = item.Aisle
+	response.Quantity = item.Quantity
+	response.Price = item.Price
+
+	c.JSON(http.StatusCreated, response)
+}
+
+func DeleteItem(c *gin.Context) {
+	item := models.Item{}
+
+	reqParamId := c.Param("id")
 	iditem := cast.ToUint(reqParamId)
 
 	delete := db.Where("id = ?", iditem).Unscoped().Delete(&item)
 	fmt.Println(delete)
 
-	context.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
 		"message": "Success",
 		"data":    iditem,
@@ -197,11 +199,11 @@ func DeleteItem(context *gin.Context) {
 }
 
 // ? Ingredients section
-func CreateIngredient(context *gin.Context) {
+func CreateIngredient(c *gin.Context) {
 	var data ingredientRequest
 
-	if err := context.Bind(&data); err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err := c.Bind(&data); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -215,7 +217,7 @@ func CreateIngredient(context *gin.Context) {
 
 	result := db.Create(&ingredient)
 	if result.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong creating ingredient to db"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong creating ingredient to db"})
 		return
 	}
 
@@ -223,19 +225,19 @@ func CreateIngredient(context *gin.Context) {
 	response.ID = ingredient.ID
 	response.Name = ingredient.Name
 
-	context.JSON(http.StatusCreated, response)
+	c.JSON(http.StatusCreated, response)
 }
 
-func GetAllIngredients(context *gin.Context) {
+func GetAllIngredients(c *gin.Context) {
 	var ingredient []models.Ingredient
 
 	err := db.Find(&ingredient)
 	if err.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Error getting ingredient from db"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Error getting ingredient from db"})
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
 		"message": "Success",
 		"data":    ingredient,
@@ -243,61 +245,14 @@ func GetAllIngredients(context *gin.Context) {
 
 }
 
-func GetIngredientByID(context *gin.Context) {
-	var data ingredientRequest
-
-	reqParamId := context.Param("idIngredient")
-	idingredient := cast.ToUint(reqParamId)
-
-	if err := context.BindJSON(&data); err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
+func GetIngredientByID(c *gin.Context) {
+	reqParamId := c.Param("id")
+	idIngredient := cast.ToUint(reqParamId)
 	ingredient := models.Ingredient{}
 
-	ingredientById := db.Where("id = ?", idingredient).First(&ingredient)
+	ingredientById := db.Where("id = ?", idIngredient).First(&ingredient)
 	if ingredientById.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "ingredient not found"})
-		return
-	}
-
-	context.JSON(http.StatusOK, gin.H{
-		"status":  "200",
-		"message": "Success",
-		"data":    ingredientById,
-	})
-}
-
-func UpdateIngredient(context *gin.Context) {
-	var data ingredientRequest
-
-	reqParamId := context.Param("idIngredient")
-	idingredient := cast.ToUint(reqParamId)
-
-	if err := context.BindJSON(&data); err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	ingredient := models.Ingredient{}
-
-	ingredientById := db.Where("id = ?", idingredient).First(&ingredient)
-	if ingredientById.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "ingredient not found"})
-		return
-	}
-
-	ingredient.Name = data.Name
-	ingredient.Obtained = data.Obtained
-	ingredient.Store = data.Store
-	ingredient.Aisle = data.Aisle
-	ingredient.Quantity = data.Quantity
-	ingredient.Price = data.Price
-
-	result := db.Save(&ingredient)
-	if result.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong updating ingredient to db"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ingredient not found"})
 		return
 	}
 
@@ -310,31 +265,79 @@ func UpdateIngredient(context *gin.Context) {
 	response.Quantity = ingredient.Quantity
 	response.Price = ingredient.Price
 
-	context.JSON(http.StatusCreated, response)
-}
-
-func DeleteIngredient(context *gin.Context) {
-	ingredient := models.Ingredient{}
-
-	reqParamId := context.Param("idIngredient")
-	idingredient := cast.ToUint(reqParamId)
-
-	delete := db.Where("id = ?", idingredient).Unscoped().Delete(&ingredient)
-	fmt.Println(delete)
-
-	context.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
 		"message": "Success",
-		"data":    idingredient,
+		"data":    response,
+	})
+}
+
+func UpdateIngredient(c *gin.Context) {
+	var data ingredientRequest
+
+	reqParamId := c.Param("id")
+	idIngredient := cast.ToUint(reqParamId)
+
+	if err := c.BindJSON(&data); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	ingredient := models.Ingredient{}
+
+	ingredientById := db.Where("id = ?", idIngredient).First(&ingredient)
+	if ingredientById.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ingredient not found"})
+		return
+	}
+
+	ingredient.Name = data.Name
+	ingredient.Obtained = data.Obtained
+	ingredient.Store = data.Store
+	ingredient.Aisle = data.Aisle
+	ingredient.Quantity = data.Quantity
+	ingredient.Price = data.Price
+
+	result := db.Save(&ingredient)
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong updating ingredient to db"})
+		return
+	}
+
+	var response ingredientResponse
+	response.ID = ingredient.ID
+	response.Name = ingredient.Name
+	response.Obtained = ingredient.Obtained
+	response.Store = ingredient.Store
+	response.Aisle = ingredient.Aisle
+	response.Quantity = ingredient.Quantity
+	response.Price = ingredient.Price
+
+	c.JSON(http.StatusCreated, response)
+}
+
+func DeleteIngredient(c *gin.Context) {
+	ingredient := models.Ingredient{}
+
+	reqParamId := c.Param("id")
+	idIngredient := cast.ToUint(reqParamId)
+
+	delete := db.Where("id = ?", idIngredient).Unscoped().Delete(&ingredient)
+	fmt.Println(delete)
+
+	c.JSON(http.StatusOK, gin.H{
+		"status":  "200",
+		"message": "Success",
+		"data":    idIngredient,
 	})
 }
 
 // ? Lists section
-func CreateList(context *gin.Context) {
+func CreateList(c *gin.Context) {
 	var data listRequest
 
-	if err := context.Bind(&data); err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err := c.Bind(&data); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -346,7 +349,7 @@ func CreateList(context *gin.Context) {
 
 	result := db.Create(&list)
 	if result.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong creating list to db"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong creating list to db"})
 		return
 	}
 
@@ -354,78 +357,34 @@ func CreateList(context *gin.Context) {
 	response.ID = list.ID
 	response.Name = list.Name
 
-	context.JSON(http.StatusCreated, response)
+	c.JSON(http.StatusCreated, response)
 }
 
-func GetAllLists(context *gin.Context) {
+func GetAllLists(c *gin.Context) {
 	var list []models.List
 
 	err := db.Find(&list)
 	if err.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Error getting list from db"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Error getting list from db"})
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
 		"message": "Success",
 		"data":    list,
 	})
 }
 
-func GetListByID(context *gin.Context) {
-	var data listRequest
-
-	reqParamId := context.Param("idList")
-	idlist := cast.ToUint(reqParamId)
-
-	if err := context.BindJSON(&data); err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+func GetListByID(c *gin.Context) {
+	reqParamId := c.Param("id")
+	idList := cast.ToUint(reqParamId)
 
 	list := models.List{}
 
-	listById := db.Where("id = ?", idlist).First(&list)
+	listById := db.First(&list, idList)
 	if listById.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "list not found"})
-		return
-	}
-
-	context.JSON(http.StatusOK, gin.H{
-		"status":  "200",
-		"message": "Success",
-		"data":    listById,
-	})
-}
-
-func UpdateList(context *gin.Context) {
-	var data listRequest
-
-	reqParamId := context.Param("idList")
-	idlist := cast.ToUint(reqParamId)
-
-	if err := context.BindJSON(&data); err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	list := models.List{}
-
-	listById := db.Where("id = ?", idlist).First(&list)
-	if listById.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "list not found"})
-		return
-	}
-
-	list.Name = data.Name
-	list.Items = data.Items
-	list.Ingredients = data.Ingredients
-	list.Recipes = data.Recipes
-
-	result := db.Save(&list)
-	if result.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong updating list to db"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "list not found"})
 		return
 	}
 
@@ -436,31 +395,75 @@ func UpdateList(context *gin.Context) {
 	response.Ingredients = list.Ingredients
 	response.Recipes = list.Recipes
 
-	context.JSON(http.StatusCreated, response)
-}
-
-func DeleteList(context *gin.Context) {
-	list := models.List{}
-
-	reqParamId := context.Param("idList")
-	idlist := cast.ToUint(reqParamId)
-
-	delete := db.Where("id = ?", idlist).Unscoped().Delete(&list)
-	fmt.Println(delete)
-
-	context.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
 		"message": "Success",
-		"data":    idlist,
+		"data":    response,
+	})
+}
+
+func UpdateList(c *gin.Context) {
+	var data listRequest
+
+	reqParamId := c.Param("id")
+	idList := cast.ToUint(reqParamId)
+
+	if err := c.BindJSON(&data); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	list := models.List{}
+
+	listById := db.Where("id = ?", idList).First(&list)
+	if listById.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "list not found"})
+		return
+	}
+
+	list.Name = data.Name
+	list.Items = data.Items
+	list.Ingredients = data.Ingredients
+	list.Recipes = data.Recipes
+
+	result := db.Save(&list)
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong updating list to db"})
+		return
+	}
+
+	var response listResponse
+	response.ID = list.ID
+	response.Name = list.Name
+	response.Items = list.Items
+	response.Ingredients = list.Ingredients
+	response.Recipes = list.Recipes
+
+	c.JSON(http.StatusCreated, response)
+}
+
+func DeleteList(c *gin.Context) {
+	list := models.List{}
+
+	reqParamId := c.Param("id")
+	idList := cast.ToUint(reqParamId)
+
+	delete := db.Where("id = ?", idList).Unscoped().Delete(&list)
+	fmt.Println(delete)
+
+	c.JSON(http.StatusOK, gin.H{
+		"status":  "200",
+		"message": "Success",
+		"data":    idList,
 	})
 }
 
 // ? Recipes section
-func CreateRecipe(context *gin.Context) {
+func CreateRecipe(c *gin.Context) {
 	var data recipeRequest
 
-	if err := context.Bind(&data); err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err := c.Bind(&data); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -470,7 +473,7 @@ func CreateRecipe(context *gin.Context) {
 
 	result := db.Create(&recipe)
 	if result.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong creating recipe to db"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong creating recipe to db"})
 		return
 	}
 
@@ -478,66 +481,63 @@ func CreateRecipe(context *gin.Context) {
 	response.ID = recipe.ID
 	response.Name = recipe.Name
 
-	context.JSON(http.StatusCreated, response)
+	c.JSON(http.StatusCreated, response)
 }
 
-func GetAllRecipes(context *gin.Context) {
+func GetAllRecipes(c *gin.Context) {
 	var recipe []models.Recipe
 
 	err := db.Find(&recipe)
 	if err.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Error getting recipe from db"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Error getting recipe from db"})
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
 		"message": "Success",
 		"data":    recipe,
 	})
 }
 
-func GetRecipeByID(context *gin.Context) {
-	var data recipeRequest
-
-	reqParamId := context.Param("idRecipe")
-	idrecipe := cast.ToUint(reqParamId)
-
-	if err := context.BindJSON(&data); err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
+func GetRecipeByID(c *gin.Context) {
+	reqParamId := c.Param("id")
+	idRecipe := cast.ToUint(reqParamId)
 	recipe := models.Recipe{}
 
-	recipeById := db.Where("id = ?", idrecipe).First(&recipe)
+	recipeById := db.Where("id = ?", idRecipe).First(&recipe)
 	if recipeById.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "recipe not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "recipe not found"})
 		return
 	}
-	context.JSON(http.StatusOK, gin.H{
+
+	var response recipeResponse
+	response.ID = recipe.ID
+	response.Ingredients = recipe.Ingredients
+
+	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
 		"message": "Success",
-		"data":    recipeById,
+		"data":    response,
 	})
 }
 
-func UpdateRecipe(context *gin.Context) {
+func UpdateRecipe(c *gin.Context) {
 	var data recipeRequest
 
-	reqParamId := context.Param("idRecipe")
-	idrecipe := cast.ToUint(reqParamId)
+	reqParamId := c.Param("id")
+	idRecipe := cast.ToUint(reqParamId)
 
-	if err := context.BindJSON(&data); err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err := c.BindJSON(&data); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	recipe := models.Recipe{}
 
-	recipeById := db.Where("id = ?", idrecipe).First(&recipe)
+	recipeById := db.Where("id = ?", idRecipe).First(&recipe)
 	if recipeById.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "recipe not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "recipe not found"})
 		return
 	}
 
@@ -546,7 +546,7 @@ func UpdateRecipe(context *gin.Context) {
 
 	result := db.Save(&recipe)
 	if result.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong updating recipe to db"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong updating recipe to db"})
 		return
 	}
 
@@ -554,22 +554,22 @@ func UpdateRecipe(context *gin.Context) {
 	response.ID = recipe.ID
 	response.Ingredients = recipe.Ingredients
 
-	context.JSON(http.StatusCreated, response)
+	c.JSON(http.StatusCreated, response)
 }
 
-func DeleteRecipe(context *gin.Context) {
+func DeleteRecipe(c *gin.Context) {
 
 	recipe := models.Recipe{}
 
-	reqParamId := context.Param("idRecipe")
-	idrecipe := cast.ToUint(reqParamId)
+	reqParamId := c.Param("id")
+	idRecipe := cast.ToUint(reqParamId)
 
-	delete := db.Where("id = ?", idrecipe).Unscoped().Delete(&recipe)
+	delete := db.Where("id = ?", idRecipe).Unscoped().Delete(&recipe)
 	fmt.Println(delete)
 
-	context.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
 		"message": "Success",
-		"data":    idrecipe,
+		"data":    idRecipe,
 	})
 }
