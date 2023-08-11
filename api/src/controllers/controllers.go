@@ -108,6 +108,7 @@ func CreateItem(c *gin.Context) {
 func GetAllItems(c *gin.Context) {
 	var item []models.Item
 
+	// todo make this all by user not full db
 	err := db.Find(&item)
 	if err.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Error getting all items"})
@@ -242,6 +243,7 @@ func CreateIngredient(c *gin.Context) {
 func GetAllIngredients(c *gin.Context) {
 	var ingredient []models.Ingredient
 
+	// todo make this all by user not full db
 	err := db.Find(&ingredient)
 	if err.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Error getting ingredient from db"})
@@ -364,6 +366,8 @@ func CreateList(c *gin.Context) {
 		return
 	}
 
+	// todo foreach loop to get and append db info from the getbyID functions
+
 	var response listResponse
 	response.ID = list.ID
 	response.Name = list.Name
@@ -377,6 +381,7 @@ func CreateList(c *gin.Context) {
 func GetAllLists(c *gin.Context) {
 	var list []models.List
 
+	// todo make this all by user not full db
 	err := db.Find(&list)
 	if err.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Error getting list from db"})
@@ -492,6 +497,8 @@ func CreateRecipe(c *gin.Context) {
 		return
 	}
 
+	// todo foreach loop to get and append db info from the getbyID functions
+
 	var response recipeResponse
 	response.ID = recipe.ID
 	response.Name = recipe.Name
@@ -503,6 +510,7 @@ func CreateRecipe(c *gin.Context) {
 func GetAllRecipes(c *gin.Context) {
 	var recipe []models.Recipe
 
+	// todo make this all by user not full db
 	err := db.Find(&recipe)
 	if err.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Error getting recipe from db"})
