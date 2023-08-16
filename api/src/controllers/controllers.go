@@ -36,15 +36,15 @@ type ingredientRequest struct {
 
 type listRequest struct {
 	Name        string              `json:"name"`
-	Items       []itemRequest       `json:"items"`
-	Ingredients []ingredientRequest `json:"ingredients"`
-	Recipes     []recipeRequest     `json:"recipes"`
+	Items       []models.Item       `json:"items"`
+	Ingredients []models.Ingredient `json:"ingredients"`
+	Recipes     []models.Recipe     `json:"recipes"`
 	Price       int64               `json:"price"`
 }
 
 type recipeRequest struct {
 	Name        string              `json:"name"`
-	Ingredients []ingredientRequest `json:"ingredients"`
+	Ingredients []models.Ingredient `json:"ingredients"`
 	Price       int64               `json:"price"`
 }
 
@@ -414,6 +414,8 @@ func GetListByID(c *gin.Context) {
 	response.Ingredients = list.Ingredients
 	response.Recipes = list.Recipes
 	response.Price = list.Price
+
+	// todo add sort by aisle ascending
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
