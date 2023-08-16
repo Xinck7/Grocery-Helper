@@ -353,3 +353,6 @@ pg_data
 
 #vagrant source files
 .vagrant
+
+#extra for pdfs
+.pdf

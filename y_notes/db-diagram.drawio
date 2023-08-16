@@ -1,0 +1,49 @@
+<mxfile host="app.diagrams.net" modified="2023-08-02T18:27:53.861Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="2aZdtiExw-K0aOUU7g0L" version="21.6.6" type="device">
+  <diagram name="Page-1" id="FOgSCso23igQOviUKSwV">
+    <mxGraphModel dx="673" dy="782" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="M2QFL01ij5f16DSacG5g-4" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="70" y="150" width="140" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="M2QFL01ij5f16DSacG5g-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="M2QFL01ij5f16DSacG5g-4">
+          <mxGeometry width="140" height="250.00000000000003" as="geometry" />
+        </mxCell>
+        <mxCell id="M2QFL01ij5f16DSacG5g-2" value="name&lt;br&gt;obtained&lt;br&gt;store&lt;br&gt;aisle&lt;br&gt;qty&lt;br&gt;price" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="M2QFL01ij5f16DSacG5g-4">
+          <mxGeometry x="40" y="104.16666666666667" width="60" height="31.250000000000004" as="geometry" />
+        </mxCell>
+        <mxCell id="M2QFL01ij5f16DSacG5g-3" value="Item 1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="M2QFL01ij5f16DSacG5g-4">
+          <mxGeometry x="40" y="10.416666666666668" width="60" height="31.250000000000004" as="geometry" />
+        </mxCell>
+        <mxCell id="M2QFL01ij5f16DSacG5g-5" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="240" y="150" width="140" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="M2QFL01ij5f16DSacG5g-6" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="M2QFL01ij5f16DSacG5g-5">
+          <mxGeometry width="140" height="250.00000000000003" as="geometry" />
+        </mxCell>
+        <mxCell id="M2QFL01ij5f16DSacG5g-7" value="name&lt;br&gt;obtained&lt;br&gt;store&lt;br&gt;aisle&lt;br&gt;qty&lt;br&gt;price" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="M2QFL01ij5f16DSacG5g-5">
+          <mxGeometry x="40" y="104.16666666666667" width="60" height="31.250000000000004" as="geometry" />
+        </mxCell>
+        <mxCell id="M2QFL01ij5f16DSacG5g-8" value="Item 2" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="M2QFL01ij5f16DSacG5g-5">
+          <mxGeometry x="40" y="10.416666666666668" width="60" height="31.250000000000004" as="geometry" />
+        </mxCell>
+        <mxCell id="M2QFL01ij5f16DSacG5g-12" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="410" y="150" width="120" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="M2QFL01ij5f16DSacG5g-9" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="M2QFL01ij5f16DSacG5g-12">
+          <mxGeometry width="120" height="249.60000000000002" as="geometry" />
+        </mxCell>
+        <mxCell id="M2QFL01ij5f16DSacG5g-10" value="List" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="M2QFL01ij5f16DSacG5g-12">
+          <mxGeometry x="30" y="18.571428571428573" width="60" height="27.85714285714286" as="geometry" />
+        </mxCell>
+        <mxCell id="M2QFL01ij5f16DSacG5g-11" value="Item 1 id&lt;br&gt;Item 2 id" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="M2QFL01ij5f16DSacG5g-12">
+          <mxGeometry x="30" y="65" width="60" height="27.85714285714286" as="geometry" />
+        </mxCell>
+        <mxCell id="M2QFL01ij5f16DSacG5g-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="M2QFL01ij5f16DSacG5g-12" source="M2QFL01ij5f16DSacG5g-9" target="M2QFL01ij5f16DSacG5g-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -36,15 +36,15 @@ type ingredientRequest struct {
 
 type listRequest struct {
 	Name        string              `json:"name"`
-	Items       []models.Item       `json:"items"`
-	Ingredients []models.Ingredient `json:"ingredients"`
-	Recipes     []models.Recipe     `json:"recipes"`
+	Items       []itemRequest       `json:"items"`
+	Ingredients []ingredientRequest `json:"ingredients"`
+	Recipes     []recipeRequest     `json:"recipes"`
 	Price       int64               `json:"price"`
 }
 
 type recipeRequest struct {
 	Name        string              `json:"name"`
-	Ingredients []models.Ingredient `json:"ingredients"`
+	Ingredients []ingredientRequest `json:"ingredients"`
 	Price       int64               `json:"price"`
 }
 

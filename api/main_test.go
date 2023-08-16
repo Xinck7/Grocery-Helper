@@ -13,16 +13,24 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-const itemsBaseRoute = "/items/"
-const itemsIDRoute = "1"
+const itemsBaseRoute = "/items"
+
+// const itemsIDRoute = "/:id"
+
 const ingredientsBaseRoute = "/ingredients"
-const ingredientsIDRoute = "/:id"
+
+// const ingredientsIDRoute = "/:id"
+
 const listsBaseRoute = "/lists"
-const listIDRoute = "/:id"
+
+// const listIDRoute = "/:id"
+
 const recipesBaseRoute = "/recipes"
-const recipesIDRoute = "/:id"
+
+// const recipesIDRoute = "/:id"
 
 func SetUpRouter() *gin.Engine {
+	gin.SetMode(gin.ReleaseMode) //comment for test debug
 	router := gin.Default()
 	return router
 }
@@ -61,6 +69,7 @@ func TestItemGet(t *testing.T) {
 // func TestItemById(t *testing.T) {
 // 	r := SetUpRouter()
 // 	r.POST(itemsBaseRoute, controllers.CreateItem)
+// 	r.GET(itemsBaseRoute+itemsIDRoute, controllers.GetItemByID)
 
 // 	item := models.Item{
 // 		Name:     "test broom",
@@ -90,10 +99,26 @@ func TestItemGet(t *testing.T) {
 
 // }
 
-//? Ingredients
-// func TestIngredientCreate(t *testing.T) {
+// ? Ingredients
+func TestIngredientCreate(t *testing.T) {
+	r := SetUpRouter()
+	r.POST(ingredientsBaseRoute, controllers.CreateIngredient)
 
-// }
+	ingredient := models.Ingredient{
+		Name:     "test eggs",
+		Obtained: true,
+		Aisle:    5,
+		Store:    "Krogers",
+		Quantity: 15,
+		Price:    20,
+	}
+	jsonValue, _ := json.Marshal(ingredient)
+	req, _ := http.NewRequest("POST", ingredientsBaseRoute, bytes.NewBuffer(jsonValue))
+
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+	assert.Equal(t, http.StatusCreated, w.Code)
+}
 
 func TestIngredientGet(t *testing.T) {
 	r := SetUpRouter()
@@ -116,10 +141,55 @@ func TestIngredientGet(t *testing.T) {
 
 // }
 
-//? List
-// func TestListCreate(t *testing.T) {
+// ? List
+func TestListCreate(t *testing.T) {
+	r := SetUpRouter()
+	r.POST(listsBaseRoute, controllers.CreateList)
+	item := models.Item{
+		Name:     "test broom",
+		Obtained: false,
+		Aisle:    5,
+		Store:    "Krogers",
+		Quantity: 15,
+		Price:    20,
+	}
+	item1 := models.Item{
+		Name:     "test broom band",
+		Obtained: false,
+		Aisle:    5,
+		Store:    "Krogers",
+		Quantity: 15,
+		Price:    20,
+	}
+	ingredient := models.Ingredient{
+		Name:     "test eggs",
+		Obtained: true,
+		Aisle:    5,
+		Store:    "Krogers",
+		Quantity: 15,
+		Price:    20,
+	}
+	ingredient1 := models.Ingredient{
+		Name:     "test bacon",
+		Obtained: true,
+		Aisle:    5,
+		Store:    "Krogers",
+		Quantity: 15,
+		Price:    20,
+	}
+	list := models.List{
+		Name:        "test eggs",
+		Items:       []models.Item{item, item1},
+		Ingredients: []models.Ingredient{ingredient, ingredient1},
+		Price:       20,
+	}
+	jsonValue, _ := json.Marshal(list)
+	req, _ := http.NewRequest("POST", listsBaseRoute, bytes.NewBuffer(jsonValue))
 
-// }
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+	assert.Equal(t, http.StatusCreated, w.Code)
+}
 
 func TestListGet(t *testing.T) {
 	r := SetUpRouter()
@@ -142,10 +212,38 @@ func TestListGet(t *testing.T) {
 
 // }
 
-//? Recipe
-// func TestRecipeCreate(t *testing.T) {
+// ? Recipe
+func TestRecipeCreate(t *testing.T) {
+	r := SetUpRouter()
+	r.POST(recipesBaseRoute, controllers.CreateRecipe)
+	ingredient := models.Ingredient{
+		Name:     "test eggs",
+		Obtained: true,
+		Aisle:    5,
+		Store:    "Krogers",
+		Quantity: 15,
+		Price:    20,
+	}
+	ingredient1 := models.Ingredient{
+		Name:     "test bacon",
+		Obtained: true,
+		Aisle:    5,
+		Store:    "Krogers",
+		Quantity: 15,
+		Price:    20,
+	}
+	list := models.List{
+		Name:        "test eggs",
+		Ingredients: []models.Ingredient{ingredient, ingredient1},
+		Price:       20,
+	}
+	jsonValue, _ := json.Marshal(list)
+	req, _ := http.NewRequest("POST", recipesBaseRoute, bytes.NewBuffer(jsonValue))
 
-// }
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+	assert.Equal(t, http.StatusCreated, w.Code)
+}
 
 func TestRecipeGet(t *testing.T) {
 	r := SetUpRouter()
