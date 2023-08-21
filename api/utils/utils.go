@@ -11,45 +11,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func QueryStoreApi(c *gin.Context) {
-	//? if krogers do logic
-	//* from Krogers API -> adapted ioutil.ReadAll to io.ReadAll
-	//Kroger api token load from .env
-	err := godotenv.Load(".env")
-	if err != nil {
-		panic("error loading .env file")
-	}
-	var token = os.Getenv("token")
-	url := "https://api.kroger.com/v1/products?filter.brand={{BRAND}}&filter.term={{TERM}}&filter.locationId={{LOCATION_ID}}"
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("Accept", "application/json")
-	req.Header.Add("Authorization", "Bearer"+token)
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := io.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-	//? if sams do logic
-}
-
-func CalculateItemPrice(c *gin.Context) {
-	//? input item as parameter
-	//? call query store api method with the name of the item
-	//? call controllers.UpdateItem() with new value
-}
-
-func CalculateIngredientPrice(c *gin.Context) {
-	//? input ingredient as parameter
-	//? call query store api method with the name of the item
-	//? call controllers.UpdateIngredient() with new value
-}
-
+// Update list and recipes for MVP
 func CalculateListPrice(list *models.List) int64 {
 	var totalPrice int64
 
@@ -79,6 +41,45 @@ func CalculateRecipePrice(recipe *models.Recipe) int64 {
 	return totalPrice
 }
 
+// Dynamic item/ingredient updates
+func QueryStoreApi(c *gin.Context) {
+	//? if Kroger's do logic
+	err := godotenv.Load(".env")
+	if err != nil {
+		panic("error loading .env file")
+	}
+	var token = os.Getenv("token")
+	url := "https://api.kroger.com/v1/products?filter.brand={{BRAND}}&filter.term={{TERM}}&filter.locationId={{LOCATION_ID}}"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer"+token)
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := io.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+	//? if Sam's do logic
+}
+
+func CalculateItemPrice(c *gin.Context) {
+	//? input item as parameter
+	//? call query store api method with the name of the item
+	//? call controllers.UpdateItem() with new value
+}
+
+func CalculateIngredientPrice(c *gin.Context) {
+	//? input ingredient as parameter
+	//? call query store api method with the name of the item
+	//? call controllers.UpdateIngredient() with new value
+}
+
+// Globally update the items/ingredients with whole database using above
 func UpdateAllItemInfo(c *gin.Context) {
 	//? Make it a go routine
 	//? for each in batches/long running task 1x a day run the item update on all database items
@@ -87,13 +88,4 @@ func UpdateAllItemInfo(c *gin.Context) {
 func UpdateAllIngredientInfo(c *gin.Context) {
 	//? Make it a go routine
 	//? for each in batches/long running task 1x a day run the ingredient update on all database ingredient
-}
-
-func UpdateAllListInfo(c *gin.Context) {
-	//? Make it a go routine
-	//? for each in batches/long running task 1x a day run the list update on all database list
-}
-
-func UpdateAllRecipeInfo(c *gin.Context) {
-	//? for each in batches/long running task 1x a day run the recipe update on all database recipe
 }

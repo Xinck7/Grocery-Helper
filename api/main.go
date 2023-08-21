@@ -7,7 +7,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// global var
 var db *gorm.DB = config.ConnectDB()
 
 func main() {

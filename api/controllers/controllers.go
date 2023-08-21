@@ -11,10 +11,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
-// Define database client
 var db *gorm.DB = config.ConnectDB()
 
 // ? requests section
@@ -50,6 +50,11 @@ type recipeRequest struct {
 	Price       int64               `json:"price"`
 }
 
+type registerRequest struct {
+	Email    string `json:email`
+	Password string
+}
+
 // ? responses section
 type itemResponse struct {
 	itemRequest
@@ -68,6 +73,11 @@ type listResponse struct {
 
 type recipeResponse struct {
 	recipeRequest
+	ID uint `json:"id"`
+}
+
+type registerResponse struct {
+	registerRequest
 	ID uint `json:"id"`
 }
 
@@ -625,4 +635,30 @@ func DeleteRecipe(c *gin.Context) {
 		"message": "Success",
 		"data":    idRecipe,
 	})
+}
+
+// ? Users section
+func RegisterUser(c *gin.Context) {
+	var data registerRequest
+
+	if err := c.Bind(&data); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(data.Password), 10)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong encrypting the password"})
+		return
+	}
+	user := models.User{}
+	user.Email = data.Email
+	user.Password = string(hashedPassword)
+
+	result := db.Create(&user)
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong creating user in db"})
+		return
+	}
+
 }

@@ -41,5 +41,8 @@ func Routes() {
 	route.PUT(recipesBaseRoute+recipesIDRoute, controllers.UpdateRecipe)
 	route.DELETE(recipesBaseRoute+recipesIDRoute, controllers.DeleteRecipe)
 
+	const registerUserRoute = "/register"
+	route.POST(registerUserRoute, controllers.RegisterUser)
+
 	route.Run()
 }
