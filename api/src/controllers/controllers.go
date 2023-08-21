@@ -539,7 +539,7 @@ func GetRecipeByID(c *gin.Context) {
 	idRecipe := cast.ToUint(reqParamId)
 	recipe := models.Recipe{}
 
-	recipeById := db.Where("id = ?", idRecipe).First(&recipe)
+	recipeById := db.Preload("Ingredients").First(&recipe, idRecipe)
 	if recipeById.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "recipe not found"})
 		return
