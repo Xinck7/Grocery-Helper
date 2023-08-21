@@ -69,13 +69,14 @@ func CalculateListPrice(list *models.List) int64 {
 	return totalPrice
 }
 
-func CalculateRecipePrice(c *gin.Context) {
-	//? input recipe as parameter
-	//? Create array of all the price values
-	//? Sum the elements in the array
-	//? return the sum
-	//? call controllers.UpdateRecipe() with the new value
-	//? ensure only updates the price and not entering null values on top
+func CalculateRecipePrice(recipe *models.Recipe) int64 {
+	var totalPrice int64
+
+	for _, ingredient := range recipe.Ingredients {
+		totalPrice += ingredient.Price * int64(ingredient.Quantity)
+	}
+
+	return totalPrice
 }
 
 func UpdateAllItemInfo(c *gin.Context) {

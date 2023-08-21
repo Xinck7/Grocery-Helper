@@ -545,10 +545,11 @@ func GetRecipeByID(c *gin.Context) {
 		return
 	}
 
+	recipePrice := utils.CalculateRecipePrice(&recipe)
 	var response recipeResponse
 	response.ID = recipe.ID
 	response.Ingredients = recipe.Ingredients
-	response.Price = recipe.Price
+	response.Price = recipePrice
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
