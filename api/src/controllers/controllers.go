@@ -408,7 +408,15 @@ func GetListByID(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "list not found"})
 		return
 	}
+
+	//calculates and updates the entry when checked
 	listPrice := utils.CalculateListPrice(&list)
+	list.Price = listPrice
+	result := db.Save(&list)
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong updating list to db"})
+		return
+	}
 
 	var response listResponse
 	response.ID = list.ID
@@ -416,7 +424,7 @@ func GetListByID(c *gin.Context) {
 	response.Items = list.Items
 	response.Ingredients = list.Ingredients
 	response.Recipes = list.Recipes
-	response.Price = listPrice
+	response.Price = list.Price
 
 	sort.Slice(list.Items, func(i, j int) bool {
 		return list.Items[i].Aisle < list.Items[j].Aisle
@@ -545,11 +553,19 @@ func GetRecipeByID(c *gin.Context) {
 		return
 	}
 
+	//calculates and updates the entry when checked
 	recipePrice := utils.CalculateRecipePrice(&recipe)
+	recipe.Price = recipePrice
+	result := db.Save(&recipe)
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Something went wrong updating list to db"})
+		return
+	}
+
 	var response recipeResponse
 	response.ID = recipe.ID
 	response.Ingredients = recipe.Ingredients
-	response.Price = recipePrice
+	response.Price = recipe.Price
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
