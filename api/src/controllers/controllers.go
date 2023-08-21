@@ -3,9 +3,11 @@ package controllers
 import (
 	"fmt"
 	"net/http"
+	"sort"
 
 	"xinck/api/src/config"
 	"xinck/api/src/models"
+	"xinck/api/src/utils"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
@@ -401,11 +403,12 @@ func GetListByID(c *gin.Context) {
 
 	list := models.List{}
 
-	listById := db.First(&list, idList)
+	listById := db.Preload("Items").Preload("Ingredients").First(&list, idList)
 	if listById.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "list not found"})
 		return
 	}
+	listPrice := utils.CalculateListPrice(&list)
 
 	var response listResponse
 	response.ID = list.ID
@@ -413,9 +416,14 @@ func GetListByID(c *gin.Context) {
 	response.Items = list.Items
 	response.Ingredients = list.Ingredients
 	response.Recipes = list.Recipes
-	response.Price = list.Price
+	response.Price = listPrice
 
-	// todo add sort by aisle ascending
+	sort.Slice(list.Items, func(i, j int) bool {
+		return list.Items[i].Aisle < list.Items[j].Aisle
+	})
+	sort.Slice(list.Ingredients, func(i, j int) bool {
+		return list.Ingredients[i].Aisle < list.Ingredients[j].Aisle
+	})
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
