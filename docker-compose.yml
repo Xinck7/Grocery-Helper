@@ -3,47 +3,42 @@ services:
   db:
     image: postgres:15-alpine
     init: true
-    container_name: grocery_db
+    container_name: grocery-db
     volumes:
       - ./pg_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: 'svc_grocery_db'
-      POSTGRES_PASSWORD: 'groceryService2022!@#'
-      POSTGRES_DB: 'grocery_helper'
+    env_file: ./api/.env
     ports:
       - "5432:5432"
-  rabbitmq:
-    image: rabbitmq:3-management
-    init: true
-    container_name: grocery_rabbitmq
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
     environment:
-      RABBITMQ_DEFAULT_USER: 'rabbitmq_user'
-      RABBITMQ_DEFAULT_PASS: 'RabbitMQMGMT2023!@#'
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
     ports:
-      - "8080:15672"
-    volumes:
-      - ./rabbitmq/var/lib/rabbitmq:/var/lib/rabbitmq
-  backend:
-    image: grocery_backend:test
+      - "5050:80"
+  api:
+    image: grocery-api:test
     init: true
-    container_name: grocery_backend
-    restart: on-failure:5
+    container_name: grocery-api
+    # restart: on-failure:5
+    restart: always
+    env_file: ./api/.env
     volumes:
-      - ./backend:/opt
+      - ./api:/usr/src/app
     depends_on:
       - db
     ports:
-      - "8000:8000"
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+      - "8080:8080"
+    command: sleep 15000 #go run main.go
   frontend:
-    image: grocery_frontend:test
+    image: grocery-frontend:live
     init: true
-    container_name: grocery_frontend
+    container_name: grocery-frontend
+    restart: always
     volumes:
-      - ./frontend:/opt
-    depends_on:
-      - backend
-    # command: bash -c "sleep 15000"
-    command: bash -c "ng serve --host 0.0.0.0"
+      - ./frontend:/opt/groceryhelper
+    command: bash -c "live-server groceryhelper --port=3000" #npm run start #todo add every 10 second refresh of tailwind
     ports:
-      - "4200:4200"
+      - "3000:3000"

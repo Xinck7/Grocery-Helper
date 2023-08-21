@@ -1,17 +1,13 @@
-#rockylinux:8 and had to tag as a separate image because it wouldn't pull??
-FROM vm-image
-COPY . /opt
-WORKDIR /opt/GroceryHelper
+FROM ubuntu:22.04
+COPY . /opt/groceryhelper
+WORKDIR /opt/groceryhelper
 
-#update container
-RUN yum clean all
-RUN yum update -y
+#Update
+RUN apt update
+RUN apt install -y curl
 
-#Install node
-RUN curl -fsSL https://rpm.nodesource.com/setup_18.x | bash -
-RUN dnf install nodejs -y
-RUN npm install npm@latest -g
-RUN npm install -g @angular/cli
-
-#Install packages
-# RUN npm install 
+#install node
+RUN curl -s https://deb.nodesource.com/setup_18.x | sh
+RUN apt install -y nodejs
+RUN npm install -g npm@9.8.1
+RUN npm install -g live-server

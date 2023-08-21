@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles.css" rel="stylesheet">
+    <!-- Material Icons Link -->
+    <link
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet"
+    />
+
+    <!-- Font Awesome Link -->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+    crossorigin="anonymous"
+    />
+    <script src="../node_modules/htmx.org/dist/htmx.min.js"></script>
+</head>
+<body>
+    <!-- Tool Bar -->
+    <div>
+    <nav class="flex justify-center space-x-4">
+        <a href="app/lists/lists.html" class="flex justify-right middle none center mr-4 rounded-lg bg-deep-purple-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-deep-purple-500/20 transition-all hover:shadow-lg hover:shadow-deep-purple-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        data-ripple-light="true">Lists</a>
+        <a href="app/recipes/recipes.html" class="flex justify-right middle none center mr-4 rounded-lg bg-deep-purple-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-deep-purple-500/20 transition-all hover:shadow-lg hover:shadow-deep-purple-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        data-ripple-light="true">Recipes</a>
+        <a href="app/items/items.html" class="flex justify-right middle none center mr-4 rounded-lg bg-deep-purple-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-deep-purple-500/20 transition-all hover:shadow-lg hover:shadow-deep-purple-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        data-ripple-light="true">Items</a>
+        <a href="app/ingredients/ingredients.html" class="flex justify-right middle none center mr-4 rounded-lg bg-deep-purple-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-deep-purple-500/20 transition-all hover:shadow-lg hover:shadow-deep-purple-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        data-ripple-light="true">Ingredients</a>
+        
+        <button class="flex justify-right middle none center mr-4 rounded-lg bg-green-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        data-ripple-light="true">Login</button>
+        <button class="flex justify-right middle none center mr-4 rounded-lg bg-red-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-red-500/20 transition-all hover:shadow-lg hover:shadow-red-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        data-ripple-light="true">Logout</button>
+    </nav>
+    </div>
+    <p class="flex justify-center">Grocery Helper</p>
+    
+    <div class="flex justify-center">
+        <img src="img/ikeagrookey.jpeg" alt="grookey">
+    </div>
+    
+    <!-- todo User information page -->
+    <div class="flex justify-center">
+        <h2> #username </h2>
+        <h3> #email </h3>
+    </div>
+    
+    <!-- todo Register page -->
+    <div class="flex justify-center">
+        <input class="rounded-lg border border-purple-500" type="text" placeholder="Username">
+        <input class="rounded-lg border border-purple-500" type="password" placeholder="password">
+        <input class="rounded-lg border border-purple-500" type="password" placeholder="confirm">
+        <input class="rounded-lg border border-purple-500"type="email" placeholder="example@gmail.com">
+    </div>
+    
+    <!-- todo Login page -->
+    <div class="flex justify-center">
+        <input class="rounded-lg border border-purple-500" type="email" placeholder="example@gmail.com">
+        <input class="rounded-lg border border-purple-500" type="password" placeholder="password">
+    </div>
+
+    <!-- todo Logout button -->
+
+    <!-- Create new item -->
+    <div class="flex justify-center">
+        <input class="rounded-lg border border-purple-500" type="text" placeholder="New Item">
+        <button  class="middle none center mr-4 rounded-lg bg-deep-purple-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-deep-purple-500/20 transition-all hover:shadow-lg hover:shadow-deep-purple-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        data-ripple-light="true">
+            Add
+        </button>
+    </div>
+
+    <!-- todo Create new List -->
+    
+    <!-- todo Create new Recipe -->
+    
+    <!-- todo Create new Ingredient -->
+    
+</body>
+</html>
