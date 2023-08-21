@@ -403,7 +403,7 @@ func GetListByID(c *gin.Context) {
 
 	list := models.List{}
 
-	listById := db.Preload("Items").Preload("Ingredients").First(&list, idList)
+	listById := db.Preload("Items").Preload("Ingredients").Preload("Recipes.Ingredients").First(&list, idList)
 	if listById.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "list not found"})
 		return

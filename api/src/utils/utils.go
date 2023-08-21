@@ -61,6 +61,11 @@ func CalculateListPrice(list *models.List) int64 {
 		totalPrice += ingredient.Price * int64(ingredient.Quantity)
 	}
 
+	for _, recipe := range list.Recipes {
+		for _, ingredient := range recipe.Ingredients {
+			totalPrice += ingredient.Price * int64(ingredient.Quantity)
+		}
+	}
 	return totalPrice
 }
 
