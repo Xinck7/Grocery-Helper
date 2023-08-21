@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"xinck/api/src/controllers"
-	"xinck/api/src/models"
+	"xinck/api/controllers"
+	"xinck/api/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"

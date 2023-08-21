@@ -8,7 +8,6 @@ import (
 type User struct {
 	gorm.Model
 	Username string
-	// Items []  //eg - `gorm:"foreignKey:UserID,constraint:OnUpdate:CASCADE,OnDelete:SET NULL"`
 }
 
 type Item struct {

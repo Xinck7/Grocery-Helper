@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"sort"
 
-	"xinck/api/src/config"
-	"xinck/api/src/models"
-	"xinck/api/src/utils"
+	"xinck/api/config"
+	"xinck/api/models"
+	"xinck/api/utils"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"

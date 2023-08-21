@@ -5,7 +5,7 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"xinck/api/src/models"
+	"xinck/api/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"

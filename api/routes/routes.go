@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"xinck/api/src/controllers"
+	"xinck/api/controllers"
 
 	"github.com/gin-gonic/gin"
 )
