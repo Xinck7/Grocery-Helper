@@ -45,8 +45,10 @@ func Routes() {
 	const registerUserRoute = "/register"
 	const loginUserRoute = "/login"
 	const validateUserRoute = "/validate"
+	const logoutUserRoute = "/logout"
 	r.POST(registerUserRoute, controllers.RegisterUser)
 	r.POST(loginUserRoute, controllers.LoginUser)
+	r.POST(logoutUserRoute, controllers.LogoutUser)
 	r.GET(validateUserRoute, middleware.RequireAuth, controllers.ValidateUserSession)
 
 	r.Run()

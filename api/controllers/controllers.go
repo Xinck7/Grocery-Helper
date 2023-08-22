@@ -692,8 +692,8 @@ func LoginUser(c *gin.Context) {
 	}
 
 	user := models.User{}
-	ingredientById := db.First(&user, "email = ?", data.Email)
-	if ingredientById.Error != nil {
+	userFromDb := db.First(&user, "email = ?", data.Email)
+	if userFromDb.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ingredient not found"})
 		return
 	}
@@ -735,4 +735,20 @@ func ValidateUserSession(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": user,
 	})
+}
+
+func LogoutUser(c *gin.Context) {
+	user, _ := c.Get("user")
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"sub": user,
+		"exp": time.Now().Add(-time.Hour).Unix(),
+	})
+	tokenString, err := token.SignedString([]byte(os.Getenv("JWT_TOKEN_SECRET")))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "failed to create token",
+		})
+		return
+	}
+	c.SetCookie("Authorization", tokenString, 3600*24*1, "", "", false, true)
 }

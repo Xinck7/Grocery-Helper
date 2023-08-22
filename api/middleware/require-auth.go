@@ -42,7 +42,7 @@ func RequireAuth(c *gin.Context) {
 		if user.ID == 0 {
 			c.AbortWithStatus(http.StatusUnauthorized)
 		}
-
+		user.Password = "Made you look"
 		c.Set("user", user)
 
 		c.Next()
