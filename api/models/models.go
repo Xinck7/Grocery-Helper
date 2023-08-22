@@ -22,7 +22,7 @@ type Item struct {
 	Quantity int8
 	Price    int64
 	Lists    []List `gorm:"many2many:item_lists;"`
-	// Added_by User.Username
+	Added    string
 	// todo Picture
 }
 
@@ -37,7 +37,7 @@ type Ingredient struct {
 	Price    int64
 	Lists    []List   `gorm:"many2many:ingredient_lists;"`
 	Recipes  []Recipe `gorm:"many2many:ingredient_recipes;"`
-	// Added_by User
+	Added    string
 	//todo Picture
 }
 
@@ -49,7 +49,7 @@ type List struct {
 	Ingredients []Ingredient `gorm:"many2many:ingredient_lists;"`
 	Recipes     []Recipe     `gorm:"many2many:list_recipes;"`
 	Price       int64
-	// Added_by    User
+	Added       string
 }
 
 type Recipe struct {
@@ -59,5 +59,5 @@ type Recipe struct {
 	Ingredients []Ingredient `gorm:"many2many:ingredient_recipes;"`
 	Lists       []List       `gorm:"many2many:list_recipes;"`
 	Price       int64
-	// Added_by    User
+	Added       string
 }

@@ -28,6 +28,7 @@ type itemRequest struct {
 	Aisle    int8   `json:"aisle"`
 	Quantity int8   `json:"qty"`
 	Price    int64  `json:"price"`
+	Added    string `json:"user"`
 }
 
 type ingredientRequest struct {
@@ -37,6 +38,7 @@ type ingredientRequest struct {
 	Aisle    int8   `json:"aisle"`
 	Quantity int8   `json:"qty"`
 	Price    int64  `json:"price"`
+	Added    string `json:"user"`
 }
 
 type listRequest struct {
@@ -45,12 +47,14 @@ type listRequest struct {
 	Ingredients []models.Ingredient `json:"ingredients"`
 	Recipes     []models.Recipe     `json:"recipes"`
 	Price       int64               `json:"price"`
+	Added       string              `json:"user"`
 }
 
 type recipeRequest struct {
 	Name        string              `json:"name"`
 	Ingredients []models.Ingredient `json:"ingredients"`
 	Price       int64               `json:"price"`
+	Added       string              `json:"user"`
 }
 
 type registerRequest struct {
@@ -90,11 +94,6 @@ type registerResponse struct {
 	ID uint `json:"id"`
 }
 
-type userResponse struct {
-	userRequest
-	ID uint `json:"id"`
-}
-
 //! CRUD Methods
 
 // ? Items section
@@ -106,6 +105,8 @@ func CreateItem(c *gin.Context) {
 		return
 	}
 
+	user, _ := c.Get("user")
+
 	item := models.Item{}
 	item.Name = data.Name
 	item.Obtained = data.Obtained
@@ -113,6 +114,7 @@ func CreateItem(c *gin.Context) {
 	item.Aisle = data.Aisle
 	item.Quantity = data.Quantity
 	item.Price = data.Price
+	item.Added = user.(models.User).Username
 
 	result := db.Create(&item)
 	if result.Error != nil {
@@ -127,29 +129,35 @@ func CreateItem(c *gin.Context) {
 	response.Aisle = item.Aisle
 	response.Quantity = item.Quantity
 	response.Price = item.Price
+	response.Added = item.Added
 
 	c.JSON(http.StatusCreated, response)
 }
 
 func GetAllItems(c *gin.Context) {
-	var item []models.Item
+	var items []models.Item
 
-	// todo make this all by user not full db
-	err := db.Find(&item)
+	user, _ := c.Get("user")
+	username := user.(models.User).Username
+	err := db.Where("added = ?", username).Find(&items)
 	if err.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Error getting all items"})
+		return
+	}
+
+	if len(items) == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "No items found by user: " + username})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
 		"message": "Success",
-		"data":    item,
+		"data":    items,
 	})
 }
 
 func GetItemByID(c *gin.Context) {
-
 	reqParamId := c.Param("id")
 	iditem := cast.ToUint(reqParamId)
 	item := models.Item{}
@@ -168,6 +176,7 @@ func GetItemByID(c *gin.Context) {
 	response.Aisle = item.Aisle
 	response.Quantity = item.Quantity
 	response.Price = item.Price
+	response.Added = item.Added
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
@@ -190,12 +199,15 @@ func UpdateItem(c *gin.Context) {
 		return
 	}
 
+	user, _ := c.Get("user")
+
 	item.Name = data.Name
 	item.Obtained = data.Obtained
 	item.Store = data.Store
 	item.Aisle = data.Aisle
 	item.Quantity = data.Quantity
 	item.Price = data.Price
+	item.Added = user.(models.User).Username
 
 	result := db.Save(&item)
 	if result.Error != nil {
@@ -211,6 +223,7 @@ func UpdateItem(c *gin.Context) {
 	response.Aisle = item.Aisle
 	response.Quantity = item.Quantity
 	response.Price = item.Price
+	response.Added = item.Added
 
 	c.JSON(http.StatusCreated, response)
 }
@@ -240,13 +253,17 @@ func CreateIngredient(c *gin.Context) {
 		return
 	}
 
+	user, _ := c.Get("user")
+
 	ingredient := models.Ingredient{}
+
 	ingredient.Name = data.Name
 	ingredient.Obtained = data.Obtained
 	ingredient.Store = data.Store
 	ingredient.Aisle = data.Aisle
 	ingredient.Quantity = data.Quantity
 	ingredient.Price = data.Price
+	ingredient.Added = user.(models.User).Username
 
 	result := db.Create(&ingredient)
 	if result.Error != nil {
@@ -262,24 +279,31 @@ func CreateIngredient(c *gin.Context) {
 	response.Aisle = ingredient.Aisle
 	response.Quantity = ingredient.Quantity
 	response.Price = ingredient.Price
+	response.Added = ingredient.Added
 
 	c.JSON(http.StatusCreated, response)
 }
 
 func GetAllIngredients(c *gin.Context) {
-	var ingredient []models.Ingredient
+	var ingredients []models.Ingredient
 
-	// todo make this all by user not full db
-	err := db.Find(&ingredient)
+	user, _ := c.Get("user")
+	username := user.(models.User).Username
+	err := db.Where("added = ?", username).Find(&ingredients)
 	if err.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Error getting ingredient from db"})
+		return
+	}
+
+	if len(ingredients) == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "No items found by user: " + username})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
 		"message": "Success",
-		"data":    ingredient,
+		"data":    ingredients,
 	})
 
 }
@@ -322,6 +346,8 @@ func UpdateIngredient(c *gin.Context) {
 		return
 	}
 
+	user, _ := c.Get("user")
+
 	ingredient := models.Ingredient{}
 
 	ingredientById := db.Where("id = ?", idIngredient).First(&ingredient)
@@ -336,6 +362,7 @@ func UpdateIngredient(c *gin.Context) {
 	ingredient.Aisle = data.Aisle
 	ingredient.Quantity = data.Quantity
 	ingredient.Price = data.Price
+	ingredient.Added = user.(models.User).Username
 
 	result := db.Save(&ingredient)
 	if result.Error != nil {
@@ -351,6 +378,7 @@ func UpdateIngredient(c *gin.Context) {
 	response.Aisle = ingredient.Aisle
 	response.Quantity = ingredient.Quantity
 	response.Price = ingredient.Price
+	response.Added = ingredient.Added
 
 	c.JSON(http.StatusCreated, response)
 }
@@ -380,11 +408,14 @@ func CreateList(c *gin.Context) {
 		return
 	}
 
+	user, _ := c.Get("user")
+
 	list := models.List{}
 	list.Name = data.Name
 	list.Items = data.Items
 	list.Ingredients = data.Ingredients
 	list.Recipes = data.Recipes
+	list.Added = user.(models.User).Username
 
 	result := db.Create(&list)
 	if result.Error != nil {
@@ -400,24 +431,31 @@ func CreateList(c *gin.Context) {
 	response.Items = list.Items
 	response.Ingredients = list.Ingredients
 	response.Recipes = list.Recipes
+	response.Added = list.Added
 
 	c.JSON(http.StatusCreated, response)
 }
 
 func GetAllLists(c *gin.Context) {
-	var list []models.List
+	var lists []models.List
 
-	// todo make this all by user not full db
-	err := db.Find(&list)
+	user, _ := c.Get("user")
+	username := user.(models.User).Username
+	err := db.Where("added = ?", username).Find(&lists)
 	if err.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Error getting list from db"})
+		return
+	}
+
+	if len(lists) == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "No items found by user: " + username})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
 		"message": "Success",
-		"data":    list,
+		"data":    lists,
 	})
 }
 
@@ -449,6 +487,7 @@ func GetListByID(c *gin.Context) {
 	response.Ingredients = list.Ingredients
 	response.Recipes = list.Recipes
 	response.Price = list.Price
+	response.Added = list.Added
 
 	sort.Slice(list.Items, func(i, j int) bool {
 		return list.Items[i].Aisle < list.Items[j].Aisle
@@ -483,10 +522,13 @@ func UpdateList(c *gin.Context) {
 		return
 	}
 
+	user, _ := c.Get("user")
+
 	list.Name = data.Name
 	list.Items = data.Items
 	list.Ingredients = data.Ingredients
 	list.Recipes = data.Recipes
+	list.Added = user.(models.User).Username
 
 	result := db.Save(&list)
 	if result.Error != nil {
@@ -500,6 +542,7 @@ func UpdateList(c *gin.Context) {
 	response.Items = list.Items
 	response.Ingredients = list.Ingredients
 	response.Recipes = list.Recipes
+	response.Added = list.Added
 
 	c.JSON(http.StatusCreated, response)
 }
@@ -529,9 +572,12 @@ func CreateRecipe(c *gin.Context) {
 		return
 	}
 
+	user, _ := c.Get("user")
+
 	recipe := models.Recipe{}
 	recipe.Name = data.Name
 	recipe.Ingredients = data.Ingredients
+	recipe.Added = user.(models.User).Username
 
 	result := db.Create(&recipe)
 	if result.Error != nil {
@@ -539,30 +585,35 @@ func CreateRecipe(c *gin.Context) {
 		return
 	}
 
-	// todo foreach loop to get and append db info from the getbyID functions
-
 	var response recipeResponse
 	response.ID = recipe.ID
 	response.Name = recipe.Name
 	response.Ingredients = recipe.Ingredients
+	response.Added = recipe.Added
 
 	c.JSON(http.StatusCreated, response)
 }
 
 func GetAllRecipes(c *gin.Context) {
-	var recipe []models.Recipe
+	var recipes []models.Recipe
 
-	// todo make this all by user not full db
-	err := db.Find(&recipe)
+	user, _ := c.Get("user")
+	username := user.(models.User).Username
+	err := db.Where("added = ?", username).Find(&recipes)
 	if err.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Error getting recipe from db"})
+		return
+	}
+
+	if len(recipes) == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "No items found by user: " + username})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
 		"message": "Success",
-		"data":    recipe,
+		"data":    recipes,
 	})
 }
 
@@ -590,6 +641,7 @@ func GetRecipeByID(c *gin.Context) {
 	response.ID = recipe.ID
 	response.Ingredients = recipe.Ingredients
 	response.Price = recipe.Price
+	response.Added = recipe.Added
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "200",
@@ -617,8 +669,11 @@ func UpdateRecipe(c *gin.Context) {
 		return
 	}
 
+	user, _ := c.Get("user")
+
 	recipe.Name = data.Name
 	recipe.Ingredients = data.Ingredients
+	recipe.Added = user.(models.User).Username
 
 	result := db.Save(&recipe)
 	if result.Error != nil {
@@ -630,6 +685,7 @@ func UpdateRecipe(c *gin.Context) {
 	response.ID = recipe.ID
 	response.Name = recipe.Name
 	response.Ingredients = recipe.Ingredients
+	response.Added = recipe.Added
 
 	c.JSON(http.StatusCreated, response)
 }
