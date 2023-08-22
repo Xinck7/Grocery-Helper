@@ -38,3 +38,14 @@ GoTH stack
 ``` bash
 ./z_env_scripts/build-images.sh && docker compose up -d
 ```
+
+Env file is expected at the path ./api/.env
+
+``` bash
+host=
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_DB=
+port=
+JWT_TOKEN_SECRET=
+```

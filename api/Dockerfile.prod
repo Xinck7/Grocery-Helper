@@ -1,4 +1,4 @@
-FROM golang:1.20
+FROM golang:1.20.6-alpine
 
 WORKDIR /usr/src/app
 ENV GIN_MODE=release
@@ -8,6 +8,8 @@ COPY go.mod go.sum ./
 RUN go mod download && go mod verify
 
 COPY . .
-RUN go build -v -o /usr/local/bin/grocery-helper ./...
+RUN go build -v -o /usr/local/bin/grocery-helper
+
+EXPOSE 8080
 
 CMD ["grocery-helper"]

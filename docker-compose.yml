@@ -9,17 +9,18 @@ services:
     env_file: ./api/.env
     ports:
       - "5432:5432"
-  pgadmin:
-    container_name: pgadmin4_container
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: root
-    ports:
-      - "5050:80"
+  # pgadmin:
+  #   container_name: pgadmin4_container
+  #   image: dpage/pgadmin4
+  #   restart: always
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@admin.com
+  #     PGADMIN_DEFAULT_PASSWORD: root
+  #   ports:
+  #     - "5050:80"
   api:
-    image: grocery-api:test
+    # image: grocery-api:test
+    image: grocery-api:prod
     init: true
     container_name: grocery-api
     # restart: on-failure:5
@@ -31,7 +32,7 @@ services:
       - db
     ports:
       - "8080:8080"
-    command: sleep 15000 #go run main.go
+    # command: sleep 15000
   frontend:
     image: grocery-frontend:live
     init: true
