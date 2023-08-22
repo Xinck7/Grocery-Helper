@@ -2,47 +2,52 @@ package routes
 
 import (
 	"xinck/api/controllers"
+	"xinck/api/middleware"
 
 	"github.com/gin-gonic/gin"
 )
 
 func Routes() {
-	route := gin.Default()
+	r := gin.Default()
 
 	const itemsBaseRoute = "/items"
 	const itemsIDRoute = "/:id"
-	route.POST(itemsBaseRoute, controllers.CreateItem)
-	route.GET(itemsBaseRoute, controllers.GetAllItems)
-	route.GET(itemsBaseRoute+itemsIDRoute, controllers.GetItemByID)
-	route.PUT(itemsBaseRoute+itemsIDRoute, controllers.UpdateItem)
-	route.DELETE(itemsBaseRoute+itemsIDRoute, controllers.DeleteItem)
+	r.POST(itemsBaseRoute, middleware.RequireAuth, controllers.CreateItem)
+	r.GET(itemsBaseRoute, middleware.RequireAuth, controllers.GetAllItems)
+	r.GET(itemsBaseRoute+itemsIDRoute, middleware.RequireAuth, controllers.GetItemByID)
+	r.PUT(itemsBaseRoute+itemsIDRoute, middleware.RequireAuth, controllers.UpdateItem)
+	r.DELETE(itemsBaseRoute+itemsIDRoute, middleware.RequireAuth, controllers.DeleteItem)
 
 	const ingredientsBaseRoute = "/ingredients"
 	const ingredientsIDRoute = "/:id"
-	route.POST(ingredientsBaseRoute, controllers.CreateIngredient)
-	route.GET(ingredientsBaseRoute, controllers.GetAllIngredients)
-	route.GET(ingredientsBaseRoute+ingredientsIDRoute, controllers.GetIngredientByID)
-	route.PUT(ingredientsBaseRoute+ingredientsIDRoute, controllers.UpdateIngredient)
-	route.DELETE(ingredientsBaseRoute+ingredientsIDRoute, controllers.DeleteIngredient)
+	r.POST(ingredientsBaseRoute, middleware.RequireAuth, controllers.CreateIngredient)
+	r.GET(ingredientsBaseRoute, middleware.RequireAuth, controllers.GetAllIngredients)
+	r.GET(ingredientsBaseRoute+ingredientsIDRoute, middleware.RequireAuth, controllers.GetIngredientByID)
+	r.PUT(ingredientsBaseRoute+ingredientsIDRoute, middleware.RequireAuth, controllers.UpdateIngredient)
+	r.DELETE(ingredientsBaseRoute+ingredientsIDRoute, middleware.RequireAuth, controllers.DeleteIngredient)
 
 	const listsBaseRoute = "/lists"
 	const listIDRoute = "/:id"
-	route.POST(listsBaseRoute, controllers.CreateList)
-	route.GET(listsBaseRoute, controllers.GetAllLists)
-	route.GET(listsBaseRoute+listIDRoute, controllers.GetListByID)
-	route.PUT(listsBaseRoute+listIDRoute, controllers.UpdateList)
-	route.DELETE(listsBaseRoute+listIDRoute, controllers.DeleteList)
+	r.POST(listsBaseRoute, middleware.RequireAuth, controllers.CreateList)
+	r.GET(listsBaseRoute, middleware.RequireAuth, controllers.GetAllLists)
+	r.GET(listsBaseRoute+listIDRoute, middleware.RequireAuth, controllers.GetListByID)
+	r.PUT(listsBaseRoute+listIDRoute, middleware.RequireAuth, controllers.UpdateList)
+	r.DELETE(listsBaseRoute+listIDRoute, middleware.RequireAuth, controllers.DeleteList)
 
 	const recipesBaseRoute = "/recipes"
 	const recipesIDRoute = "/:id"
-	route.POST(recipesBaseRoute, controllers.CreateRecipe)
-	route.GET(recipesBaseRoute, controllers.GetAllRecipes)
-	route.GET(recipesBaseRoute+recipesIDRoute, controllers.GetRecipeByID)
-	route.PUT(recipesBaseRoute+recipesIDRoute, controllers.UpdateRecipe)
-	route.DELETE(recipesBaseRoute+recipesIDRoute, controllers.DeleteRecipe)
+	r.POST(recipesBaseRoute, middleware.RequireAuth, controllers.CreateRecipe)
+	r.GET(recipesBaseRoute, middleware.RequireAuth, controllers.GetAllRecipes)
+	r.GET(recipesBaseRoute+recipesIDRoute, middleware.RequireAuth, controllers.GetRecipeByID)
+	r.PUT(recipesBaseRoute+recipesIDRoute, middleware.RequireAuth, controllers.UpdateRecipe)
+	r.DELETE(recipesBaseRoute+recipesIDRoute, middleware.RequireAuth, controllers.DeleteRecipe)
 
 	const registerUserRoute = "/register"
-	route.POST(registerUserRoute, controllers.RegisterUser)
+	const loginUserRoute = "/login"
+	const validateUserRoute = "/validate"
+	r.POST(registerUserRoute, controllers.RegisterUser)
+	r.POST(loginUserRoute, controllers.LoginUser)
+	r.GET(validateUserRoute, middleware.RequireAuth, controllers.ValidateUserSession)
 
-	route.Run()
+	r.Run()
 }

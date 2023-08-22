@@ -3,13 +3,16 @@ package controllers
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"sort"
+	"time"
 
 	"xinck/api/config"
 	"xinck/api/models"
 	"xinck/api/utils"
 
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/spf13/cast"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
@@ -51,7 +54,13 @@ type recipeRequest struct {
 }
 
 type registerRequest struct {
-	Email    string `json:email`
+	Email    string `json:"email"`
+	Username string `json:"username"`
+	Password string
+}
+
+type userRequest struct {
+	Email    string `json:"email"`
 	Password string
 }
 
@@ -78,6 +87,11 @@ type recipeResponse struct {
 
 type registerResponse struct {
 	registerRequest
+	ID uint `json:"id"`
+}
+
+type userResponse struct {
+	userRequest
 	ID uint `json:"id"`
 }
 
@@ -653,6 +667,7 @@ func RegisterUser(c *gin.Context) {
 	}
 	user := models.User{}
 	user.Email = data.Email
+	user.Username = data.Username
 	user.Password = string(hashedPassword)
 
 	result := db.Create(&user)
@@ -661,4 +676,63 @@ func RegisterUser(c *gin.Context) {
 		return
 	}
 
+	var response registerResponse
+	response.ID = user.ID
+	response.Email = user.Email
+	response.Username = user.Username
+
+	c.JSON(http.StatusCreated, response)
+}
+
+func LoginUser(c *gin.Context) {
+	var data userRequest
+	if err := c.Bind(&data); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	user := models.User{}
+	ingredientById := db.First(&user, "email = ?", data.Email)
+	if ingredientById.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ingredient not found"})
+		return
+	}
+
+	if user.ID == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid email or password",
+		})
+
+		return
+	}
+
+	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(data.Password))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid email or password",
+		})
+		return
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"sub": user.ID,
+		"exp": time.Now().Add(time.Hour * 24 * 1).Unix(),
+	})
+	tokenString, err := token.SignedString([]byte(os.Getenv("JWT_TOKEN_SECRET")))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "failed to create token",
+		})
+		return
+	}
+	c.SetSameSite(http.SameSiteLaxMode)
+	c.SetCookie("Authorization", tokenString, 3600*24*1, "", "", false, true)
+	c.JSON(http.StatusOK, gin.H{})
+}
+
+func ValidateUserSession(c *gin.Context) {
+	user, _ := c.Get("user")
+	c.JSON(http.StatusOK, gin.H{
+		"message": user,
+	})
 }
