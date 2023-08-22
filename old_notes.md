@@ -7,8 +7,17 @@
 
 ## Backend Design ideas
 
-- calculate total price of items on the list
-- get celery/redis to execute tyhe task
+[x] calculate total price of items on the list
+
+[] Create calendar section
+
+[] Categories for recipes as 'veggies', 'protein/fat', or 'starches/sugar'
+
+[] Map the section to the calendar (drag and drop?)
+
+[] Add to list based on calendar 'plan'
+
+- get celery/redis to execute the task?
 - generate route for aisles
 
 ## Frontend Design ideas

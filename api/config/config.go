@@ -3,7 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
-	"xinck/api/src/models"
+	"xinck/api/models"
 
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"

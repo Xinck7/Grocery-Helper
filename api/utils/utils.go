@@ -5,16 +5,45 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"xinck/api/src/models"
+	"xinck/api/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
+// Update list and recipes for MVP
+func CalculateListPrice(list *models.List) int64 {
+	var totalPrice int64
+
+	for _, item := range list.Items {
+		totalPrice += item.Price * int64(item.Quantity)
+	}
+
+	for _, ingredient := range list.Ingredients {
+		totalPrice += ingredient.Price * int64(ingredient.Quantity)
+	}
+
+	for _, recipe := range list.Recipes {
+		for _, ingredient := range recipe.Ingredients {
+			totalPrice += ingredient.Price * int64(ingredient.Quantity)
+		}
+	}
+	return totalPrice
+}
+
+func CalculateRecipePrice(recipe *models.Recipe) int64 {
+	var totalPrice int64
+
+	for _, ingredient := range recipe.Ingredients {
+		totalPrice += ingredient.Price * int64(ingredient.Quantity)
+	}
+
+	return totalPrice
+}
+
+// Dynamic item/ingredient updates
 func QueryStoreApi(c *gin.Context) {
-	//? if krogers do logic
-	//* from Krogers API -> adapted ioutil.ReadAll to io.ReadAll
-	//Kroger api token load from .env
+	//? if Kroger's do logic
 	err := godotenv.Load(".env")
 	if err != nil {
 		panic("error loading .env file")
@@ -35,7 +64,7 @@ func QueryStoreApi(c *gin.Context) {
 	fmt.Println(res)
 	fmt.Println(string(body))
 
-	//? if sams do logic
+	//? if Sam's do logic
 }
 
 func CalculateItemPrice(c *gin.Context) {
@@ -50,29 +79,7 @@ func CalculateIngredientPrice(c *gin.Context) {
 	//? call controllers.UpdateIngredient() with new value
 }
 
-func CalculateListPrice(list *models.List) int64 {
-	var totalPrice int64
-
-	for _, item := range list.Items {
-		totalPrice += item.Price * int64(item.Quantity)
-	}
-
-	for _, ingredient := range list.Ingredients {
-		totalPrice += ingredient.Price * int64(ingredient.Quantity)
-	}
-
-	return totalPrice
-}
-
-func CalculateRecipePrice(c *gin.Context) {
-	//? input recipe as parameter
-	//? Create array of all the price values
-	//? Sum the elements in the array
-	//? return the sum
-	//? call controllers.UpdateRecipe() with the new value
-	//? ensure only updates the price and not entering null values on top
-}
-
+// Globally update the items/ingredients with whole database using above
 func UpdateAllItemInfo(c *gin.Context) {
 	//? Make it a go routine
 	//? for each in batches/long running task 1x a day run the item update on all database items
@@ -81,13 +88,4 @@ func UpdateAllItemInfo(c *gin.Context) {
 func UpdateAllIngredientInfo(c *gin.Context) {
 	//? Make it a go routine
 	//? for each in batches/long running task 1x a day run the ingredient update on all database ingredient
-}
-
-func UpdateAllListInfo(c *gin.Context) {
-	//? Make it a go routine
-	//? for each in batches/long running task 1x a day run the list update on all database list
-}
-
-func UpdateAllRecipeInfo(c *gin.Context) {
-	//? for each in batches/long running task 1x a day run the recipe update on all database recipe
 }

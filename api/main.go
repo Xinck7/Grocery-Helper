@@ -1,13 +1,12 @@
 package main
 
 import (
-	"xinck/api/src/config"
-	"xinck/api/src/routes"
+	"xinck/api/config"
+	"xinck/api/routes"
 
 	"gorm.io/gorm"
 )
 
-// global var
 var db *gorm.DB = config.ConnectDB()
 
 func main() {
