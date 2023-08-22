@@ -42,14 +42,10 @@ func Routes() {
 	r.PUT(recipesBaseRoute+recipesIDRoute, middleware.RequireAuth, controllers.UpdateRecipe)
 	r.DELETE(recipesBaseRoute+recipesIDRoute, middleware.RequireAuth, controllers.DeleteRecipe)
 
-	const registerUserRoute = "/register"
-	const loginUserRoute = "/login"
-	const validateUserRoute = "/validate"
-	const logoutUserRoute = "/logout"
-	r.POST(registerUserRoute, controllers.RegisterUser)
-	r.POST(loginUserRoute, controllers.LoginUser)
-	r.POST(logoutUserRoute, controllers.LogoutUser)
-	r.GET(validateUserRoute, middleware.RequireAuth, controllers.ValidateUserSession)
+	r.POST("/register", controllers.RegisterUser)
+	r.POST("/login", controllers.LoginUser)
+	r.GET("/validate", middleware.RequireAuth, controllers.ValidateUserSession)
+	r.GET("/logout", controllers.LogoutUser)
 
 	r.Run()
 }
