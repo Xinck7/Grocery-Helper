@@ -1,0 +1,17 @@
+{{ define "list" }}
+  <div hx-target="#list-list">
+    <h1 id="listName">{{ .list.Name }}</h1>
+    <p>Total Price: $<span id="listPrice">{{ printf "%.2f" .list.Price }}</span></p>
+
+        {{ range .list }}
+            <li>
+                {{ if eq .Type "Item" }}
+                    Item: {{ .Name }} in Aisle {{ .Aisle }}
+                {{ else if eq .Type "Ingredient" }}
+                    Ingredient: {{ .Name }} in Aisle {{ .Aisle }}
+                {{ end }}
+            </li>
+        {{ end }}
+    </ul>
+  </div>
+{{ end }}

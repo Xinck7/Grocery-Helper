@@ -150,10 +150,8 @@ func GetAllItems(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"status":  "200",
-		"message": "Success",
-		"data":    items,
+	c.HTML(http.StatusOK, "items.tmpl", gin.H{
+		"items": items,
 	})
 }
 
@@ -300,10 +298,8 @@ func GetAllIngredients(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"status":  "200",
-		"message": "Success",
-		"data":    ingredients,
+	c.HTML(http.StatusOK, "ingredients.tmpl", gin.H{
+		"ingredients": ingredients,
 	})
 
 }
@@ -452,10 +448,8 @@ func GetAllLists(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"status":  "200",
-		"message": "Success",
-		"data":    lists,
+	c.HTML(http.StatusOK, "lists.tmpl", gin.H{
+		"lists": lists,
 	})
 }
 
@@ -480,26 +474,39 @@ func GetListByID(c *gin.Context) {
 		return
 	}
 
-	var response listResponse
-	response.ID = list.ID
-	response.Name = list.Name
-	response.Items = list.Items
-	response.Ingredients = list.Ingredients
-	response.Recipes = list.Recipes
-	response.Price = list.Price
-	response.Added = list.Added
+	//Takes adds the recipe ingredients to the quantity of ingredients total for the response
+	utils.MergeIngredients(&list)
 
-	sort.Slice(list.Items, func(i, j int) bool {
-		return list.Items[i].Aisle < list.Items[j].Aisle
-	})
-	sort.Slice(list.Ingredients, func(i, j int) bool {
-		return list.Ingredients[i].Aisle < list.Ingredients[j].Aisle
+	combinedList := []interface{}{}
+
+	for _, item := range list.Items {
+		combinedList = append(combinedList, item)
+	}
+	for _, ingredient := range list.Ingredients {
+		combinedList = append(combinedList, ingredient)
+	}
+
+	sort.SliceStable(combinedList, func(i, j int) bool {
+		switch x := combinedList[i].(type) {
+		case models.Item:
+			y, ok := combinedList[j].(models.Item)
+			if !ok {
+				return true
+			}
+			return x.Aisle < y.Aisle
+		case models.Ingredient:
+			y, ok := combinedList[j].(models.Ingredient)
+			if !ok {
+				return false
+			}
+			return x.Aisle < y.Aisle
+		default:
+			return true
+		}
 	})
 
-	c.JSON(http.StatusOK, gin.H{
-		"status":  "200",
-		"message": "Success",
-		"data":    response,
+	c.HTML(http.StatusOK, "list.tmpl", gin.H{
+		"list": combinedList,
 	})
 }
 

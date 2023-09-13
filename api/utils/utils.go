@@ -41,6 +41,24 @@ func CalculateRecipePrice(recipe *models.Recipe) int64 {
 	return totalPrice
 }
 
+func MergeIngredients(list *models.List) {
+	allIngredients := make(map[string]int8)
+
+	for _, ingredient := range list.Ingredients {
+		allIngredients[ingredient.Name] += ingredient.Quantity
+	}
+
+	for _, recipe := range list.Recipes {
+		for _, ingredient := range recipe.Ingredients {
+			allIngredients[ingredient.Name] += ingredient.Quantity
+		}
+	}
+
+	for i, ingredient := range list.Ingredients {
+		list.Ingredients[i].Quantity = allIngredients[ingredient.Name]
+	}
+}
+
 // Dynamic item/ingredient updates
 func QueryStoreApi(c *gin.Context) {
 	//? if Kroger's do logic

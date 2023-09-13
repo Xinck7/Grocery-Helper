@@ -1,0 +1,13 @@
+{{ define "items" }}
+  <div hx-target="#items-list">
+    {{ range .items }}
+      <div class="items">
+        <p>Name: {{ .Name }}</p>
+        <p>Quantity: {{ .Quantity }}</p>
+        <p>Aisle: {{ .Aisle }}</p>
+        <p>Store: {{ .Store }}</p>
+        <p>Price: ${{ .Price }}</p>
+      </div>
+    {{ end }}
+  </div>
+{{ end }}
